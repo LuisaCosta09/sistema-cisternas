@@ -1,48 +1,57 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Usuario(models.Model):
     user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="usuario"
+        related_name="usuario",
+        primary_key=True,
     )
+    nome = models.CharField(max_length=255)
+    cpf = models.BigIntegerField()
 
     def __str__(self):
-        return self.user.username
+        return f"{self.nome} ({self.user.username})"
 
 
 class Cisterna(models.Model):
+    id = models.AutoField(primary_key=True)
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
-        related_name="cisternas"
+        related_name="cisternas",
     )
-
-    localizacao = models.CharField(max_length=255)
+    latitude = models.CharField(max_length=255)
     capacidade = models.FloatField()
-    descricao = models.TextField()
-    status = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
+    longitude = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Cisterna {self.id} - {self.localizacao}"
+        return f"Cisterna {self.id}"
 
 
 class Monitoramento(models.Model):
+    id = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name="monitoramentos",
+    )
     cisterna = models.ForeignKey(
         Cisterna,
         on_delete=models.CASCADE,
-        related_name="monitoramentos"
+        related_name="monitoramentos",
     )
-
     dataHora = models.DateTimeField()
     nivelAgua = models.FloatField()
     consumo = models.FloatField()
-    situacao = models.CharField(max_length=50)
+    situacao = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Monitoramento {self.id} - Cisterna {self.cisterna.id}"
+        return f"Monitoramento {self.id}"
 
 
 class Relatorio(models.Model):
