@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import Usuario, Cisterna, Monitoramento, Relatorio, Alerta, Abastecimento
+from .models import (
+    Usuario,
+    Cisterna,
+    Monitoramento,
+    Alerta,
+    Abastecimento,
+)
 
 
 @admin.register(Usuario)
@@ -37,34 +43,30 @@ class MonitoramentoAdmin(admin.ModelAdmin):
     list_filter = ("situacao", "dataHora")
 
 
-@admin.register(Relatorio)
-class RelatorioAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "usuario",
-        "cisterna",
-        "periodoInicio",
-        "periodoFim",
-        "formato",
-        "dataGeracao",
-    )
-    list_filter = ("formato", "dataGeracao")
-
 
 @admin.register(Alerta)
 class AlertaAdmin(admin.ModelAdmin):
-    list_display = ("id", "cisterna", "tipo", "status", "dataHora")
-    list_filter = ("tipo", "status")
+    list_display = (
+        "id",
+        "cisterna",
+        "tipo",
+        "status",
+        "dataHora",
+    )
+    list_filter = ("tipo", "status", "dataHora")
+    search_fields = ("tipo", "mensagem")
 
 
 @admin.register(Abastecimento)
 class AbastecimentoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
+        "usuario",
         "cisterna",
         "dataHora",
         "quantidadeAgua",
         "tipo",
         "status",
     )
-    list_filter = ("tipo", "status")
+    list_filter = ("tipo", "status", "dataHora")
+    search_fields = ("tipo", "observacao")

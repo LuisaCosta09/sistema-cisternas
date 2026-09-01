@@ -54,38 +54,19 @@ class Monitoramento(models.Model):
         return f"Monitoramento {self.id}"
 
 
-class Relatorio(models.Model):
-    usuario = models.ForeignKey(
-        Usuario,
-        on_delete=models.CASCADE,
-        related_name="relatorios"
-    )
 
-    cisterna = models.ForeignKey(
-        Cisterna,
-        on_delete=models.CASCADE,
-        related_name="relatorios"
-    )
-
-    periodoInicio = models.DateField()
-    periodoFim = models.DateField()
-    formato = models.CharField(max_length=20)
-    dataGeracao = models.DateTimeField()
-
-    def __str__(self):
-        return f"Relatório {self.id}"
 
 
 class Alerta(models.Model):
+    id = models.AutoField(primary_key=True)
     cisterna = models.ForeignKey(
         Cisterna,
         on_delete=models.CASCADE,
-        related_name="alertas"
+        related_name="alertas",
     )
-
-    tipo = models.CharField(max_length=50)
-    mensagem = models.TextField()
-    status = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=255)
+    mensagem = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
     dataHora = models.DateTimeField()
 
     def __str__(self):
@@ -93,17 +74,22 @@ class Alerta(models.Model):
 
 
 class Abastecimento(models.Model):
+    id = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name="abastecimentos",
+    )
     cisterna = models.ForeignKey(
         Cisterna,
         on_delete=models.CASCADE,
-        related_name="abastecimentos"
+        related_name="abastecimentos",
     )
-
     dataHora = models.DateTimeField()
     quantidadeAgua = models.FloatField()
-    tipo = models.CharField(max_length=50)
-    observacao = models.TextField()
-    status = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=255)
+    observacao = models.CharField(max_length=255)
+    status = models.CharField(max_length=255)
 
     def __str__(self):
         return f"Abastecimento {self.id}"
