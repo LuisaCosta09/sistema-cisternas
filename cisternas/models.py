@@ -1,23 +1,15 @@
-from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class Usuario(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="usuario",
-        primary_key=True,
-    )
+class Usuario(User):
     nome = models.CharField(max_length=255)
     cpf = models.BigIntegerField()
 
-    def __str__(self):
-        return f"{self.nome} ({self.user.username})"
-
+    def _str_(self):
+        return f"{self.nome} ({self.username})"
 
 class Cisterna(models.Model):
-    id = models.AutoField(primary_key=True)
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
@@ -34,7 +26,6 @@ class Cisterna(models.Model):
 
 
 class Monitoramento(models.Model):
-    id = models.AutoField(primary_key=True)
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
@@ -58,7 +49,6 @@ class Monitoramento(models.Model):
 
 
 class Alerta(models.Model):
-    id = models.AutoField(primary_key=True)
     cisterna = models.ForeignKey(
         Cisterna,
         on_delete=models.CASCADE,
@@ -74,7 +64,6 @@ class Alerta(models.Model):
 
 
 class Abastecimento(models.Model):
-    id = models.AutoField(primary_key=True)
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,

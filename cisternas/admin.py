@@ -11,14 +11,13 @@ from .models import (
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ("user", "nome", "cpf")
-    search_fields = ("nome", "cpf", "user__username", "user__email")
+    list_display = ("username", "nome", "cpf")
+    search_fields = ("nome", "cpf", "username", "email")
 
 
 @admin.register(Cisterna)
 class CisternaAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "usuario",
         "latitude",
         "longitude",
@@ -32,7 +31,6 @@ class CisternaAdmin(admin.ModelAdmin):
 @admin.register(Monitoramento)
 class MonitoramentoAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "usuario",
         "cisterna",
         "dataHora",
@@ -47,7 +45,6 @@ class MonitoramentoAdmin(admin.ModelAdmin):
 @admin.register(Alerta)
 class AlertaAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "cisterna",
         "tipo",
         "status",
@@ -60,7 +57,6 @@ class AlertaAdmin(admin.ModelAdmin):
 @admin.register(Abastecimento)
 class AbastecimentoAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "usuario",
         "cisterna",
         "dataHora",
