@@ -1,0 +1,74 @@
+{% extends "cisternas/base.html" %}
+{% block title %}Cisternas | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel">
+ <div class="pagina-topo">
+ <div>
+ <p class="pagina-sobre">Cisternas</p>
+ <h1>{{ titulo_pagina }}</h1>
+ <p class="pagina-descricao">
+ Total de cisternas cadastradas: {{ quantidade_cisternas }}.
+ </p>
+ </div>
+ <a class="botao botao-primario" href="{% url 'cisterna_criar' %}">
+ Cadastrar cisterna
+ </a>
+ </div>
+ {% if cisternas %}
+ <div class="tabela-container">
+ <table class="tabela-dados">
+ <thead>
+ <tr>
+ <th>ID</th>
+ <th>Responsável</th>
+ <th>Latitude</th>
+ <th>Longitude</th>
+ <th>Capacidade</th>
+ <th>Descrição</th>
+ <th>Status</th>
+ <th>Mapa</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for cisterna in cisternas %}
+ <tr>
+ <td>{{ cisterna.id }}</td>
+ <td>{{ cisterna.usuario.nome }}</td>
+ <td>{{ cisterna.latitude }}</td>
+ <td>{{ cisterna.longitude }}</td>
+ <td>{{ cisterna.capacidade }} L</td>
+ <td>{{ cisterna.descricao }}</td>
+ <td>
+ <span class="status-texto">
+ {{ cisterna.status }}
+ </span>
+ </td>
+ <td>
+ <a
+ class="link-tabela"
+ href="https://www.openstreetmap.org/?mlat={{ cisterna.latitude }}&mlon={{ cisterna.longitude }}#map=17/{{ cisterna.latitude }}/{{ cisterna.longitude }}"
+ target="_blank"
+ rel="noopener noreferrer"
+ >
+ Ver no mapa
+ </a>
+ </td>
+ </tr>
+ {% endfor %}
+ </tbody>
+ </table>
+ </div>
+ {% else %}
+ <div class="estado-vazio">
+ <h2>Nenhuma cisterna cadastrada</h2>
+ <p>
+ Cadastre a primeira cisterna para começar a registrar
+ monitoramentos, alertas e abastecimentos.
+ </p>
+ <a class="botao botao-primario" href="{% url 'cisterna_criar' %}">
+ Cadastrar primeira cisterna
+ </a>
+ </div>
+ {% endif %}
+</section>
+{% endblock %}
