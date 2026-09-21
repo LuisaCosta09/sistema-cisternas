@@ -1,5 +1,8 @@
-from django.db import models
+from decimal import Decimal
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class Usuario(User):
@@ -9,21 +12,48 @@ class Usuario(User):
     def _str_(self):
         return f"{self.nome} ({self.username})"
 
+
 class Cisterna(models.Model):
     usuario = models.ForeignKey(
         Usuario,
         on_delete=models.CASCADE,
         related_name="cisternas",
     )
-    latitude = models.CharField(max_length=255)
-    capacidade = models.FloatField()
+
+    latitude = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        validators=[
+            MinValueValidator(Decimal("-90")),
+            MaxValueValidator(Decimal("90")),
+        ],
+    )
+
+    longitude = models.DecimalField(
+        max_digits=10,
+        decimal_places=7,
+        validators=[
+            MinValueValidator(Decimal("-180")),
+            MaxValueValidator(Decimal("180")),
+        ],
+    )
+
+    capacidade = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(Decimal("0.01")),
+        ],
+    )
+
     descricao = models.CharField(max_length=255)
-    status = models.CharField(max_length=255)
-    longitude = models.CharField(max_length=255)
+    status = models.CharField(max_length=20)
+
+    class Meta:
+        ordering = ("id",)
 
     def __str__(self):
-        return f"Cisterna {self.id}"
-
+        return f"Cisterna {self.id} - {self.usuario.nome}"
 
 class Monitoramento(models.Model):
     usuario = models.ForeignKey(
@@ -43,10 +73,6 @@ class Monitoramento(models.Model):
 
     def __str__(self):
         return f"Monitoramento {self.id}"
-
-
-
-
 
 class Alerta(models.Model):
     cisterna = models.ForeignKey(

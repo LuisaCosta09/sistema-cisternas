@@ -1,0 +1,74 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Sistema de Cisternas{% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'cisternas/css/base.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <header class="cabecalho">
+        <div class="cabecalho-conteudo">
+            <a class="marca" href="{% url 'inicio' %}">
+                Sistema de Cisternas
+            </a>
+
+           
+<nav class="navegacao" aria-label="Navegação principal">
+    <a href="{% url 'cisterna_listar' %}">
+        Cisternas
+    </a>
+    
+{% comment %}
+<a href="{% url 'usuario_listar' %}">
+    Usuários
+</a>
+
+<a href="{% url 'monitoramento_listar' %}">
+    Monitoramentos
+</a>
+
+<a href="{% url 'alerta_listar' %}">
+    Alertas
+</a>
+
+<a href="{% url 'abastecimento_listar' %}">
+    Abastecimentos
+</a>
+{% endcomment %}
+
+
+</nav>
+
+        </div>
+    </header>
+
+    <main class="conteudo-principal">
+
+        {% if messages %}
+            <section class="mensagens" aria-label="Mensagens do sistema">
+                {% for message in messages %}
+                    <div class="mensagem mensagem-{{ message.tags|default:'info' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

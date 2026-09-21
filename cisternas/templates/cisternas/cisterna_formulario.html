@@ -1,0 +1,125 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+{% block title %}Cadastrar cisterna | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel formulario-painel">
+ <div class="pagina-topo">
+ <div>
+ <p class="pagina-sobre">Cisternas</p>
+ <h1>{{ titulo_pagina }}</h1>
+ <p class="pagina-descricao">
+ Informe os dados da cisterna. A latitude e a longitude podem ser
+ digitadas manualmente ou preenchidas com a localização do dispositivo.
+ </p>
+ </div>
+ <a class="botao botao-secundario" href="{% url 'cisterna_listar' %}">
+ Voltar para a listagem
+ </a>
+ </div>
+ <form method="post" novalidate class="formulario" id="form-cisterna">
+ {% csrf_token %}
+ {% if form.non_field_errors %}
+ <div class="erros-gerais" role="alert">
+ {% for error in form.non_field_errors %}
+ <p>{{ error }}</p>
+ {% endfor %}
+ </div>
+ {% endif %}
+ <div class="campo-grupo">
+ <label for="{{ form.usuario.id_for_label }}">
+ {{ form.usuario.label }}
+ </label>
+ {{ form.usuario }}
+ {% if form.usuario.help_text %}
+ <small class="ajuda-campo">{{ form.usuario.help_text }}</small>
+ {% endif %}
+ {% for error in form.usuario.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ <div class="grade-dois-campos">
+ <div class="campo-grupo">
+ <label for="{{ form.latitude.id_for_label }}">
+ {{ form.latitude.label }}
+ </label>
+ {{ form.latitude }}
+ {% if form.latitude.help_text %}
+ <small class="ajuda-campo">{{ form.latitude.help_text }}</small>
+ {% endif %}
+ {% for error in form.latitude.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ <div class="campo-grupo">
+ <label for="{{ form.longitude.id_for_label }}">
+ {{ form.longitude.label }}
+ </label>
+ {{ form.longitude }}
+ {% if form.longitude.help_text %}
+ <small class="ajuda-campo">{{ form.longitude.help_text }}</small>
+ {% endif %}
+ {% for error in form.longitude.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ </div>
+ <div class="localizacao-acoes">
+ <button
+ class="botao botao-localizacao"
+ type="button"
+ id="usar-localizacao"
+ >
+ Usar minha localização
+ </button>
+ <p id="mensagem-localizacao" class="mensagem-localizacao" aria-live="polite"></p>
+ </div>
+ <div class="campo-grupo">
+ <label for="{{ form.capacidade.id_for_label }}">
+ {{ form.capacidade.label }}
+ </label>
+ {{ form.capacidade }}
+ {% if form.capacidade.help_text %}
+ <small class="ajuda-campo">{{ form.capacidade.help_text }}</small>
+ {% endif %}
+ {% for error in form.capacidade.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ <div class="campo-grupo">
+ <label for="{{ form.descricao.id_for_label }}">
+ {{ form.descricao.label }}
+ </label>
+ {{ form.descricao }}
+ {% if form.descricao.help_text %}
+ <small class="ajuda-campo">{{ form.descricao.help_text }}</small>
+ {% endif %}
+ {% for error in form.descricao.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ <div class="campo-grupo">
+ <label for="{{ form.status.id_for_label }}">
+ {{ form.status.label }}
+ </label>
+ {{ form.status }}
+ {% if form.status.help_text %}
+ <small class="ajuda-campo">{{ form.status.help_text }}</small>
+ {% endif %}
+ {% for error in form.status.errors %}
+ <small class="erro-campo">{{ error }}</small>
+ {% endfor %}
+ </div>
+ <div class="formulario-acoes">
+ <button class="botao botao-primario" type="submit">
+ Cadastrar cisterna
+ </button>
+ <a class="botao botao-secundario" href="{% url 'cisterna_listar' %}">
+ Cancelar
+ </a>
+ </div>
+ </form>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'cisternas/js/geolocalizacao.js' %}"></script>
+{% endblock %}
