@@ -1,0 +1,84 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+    rel="stylesheet"
+    href="{% static 'cisternas/css/usuario_monitoramento.css' %}"
+>
+{% endblock %}
+
+{% block title %}
+Usuário {{ usuario.nome }} | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Usuário</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Informações completas do usuário selecionado.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url 'usuario_listar' %}"
+        >
+            Voltar para a listagem
+        </a>
+    </div>
+
+    <div class="grade-detalhes">
+        <div class="detalhe-item">
+            <strong>ID:</strong>
+            <span>{{ usuario.id }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Nome de usuário:</strong>
+            <span>{{ usuario.username }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Nome completo:</strong>
+            <span>{{ usuario.nome }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>E-mail:</strong>
+            <span>{{ usuario.email }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>CPF:</strong>
+            <span>{{ usuario.cpf }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Data de cadastro:</strong>
+            <span>{{ usuario.date_joined|date:"d/m/Y H:i" }}</span>
+        </div>
+    </div>
+
+    <div class="formulario-acoes">
+        <a
+            class="botao botao-primario"
+            href="{% url 'usuario_editar' usuario.pk %}"
+        >
+            Editar usuário
+        </a>
+
+        <a
+            class="botao botao-perigo"
+            href="{% url 'usuario_excluir' usuario.pk %}"
+        >
+            Excluir usuário
+        </a>
+    </div>
+</section>
+{% endblock %}

@@ -34,49 +34,75 @@ Usuários | Sistema de Cisternas
         </a>
     </div>
 
-    {% if usuarios %}
+  {% if usuarios %}
 
-        <div class="tabela-container">
-            <table class="tabela-dados tabela-usuarios">
+    <div class="tabela-container">
+        <table class="tabela-dados tabela-usuarios">
 
-                <thead>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome de usuário</th>
+                    <th>Nome completo</th>
+                    <th>E-mail</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for usuario in usuarios %}
                     <tr>
-                        <th>ID</th>
-                        <th>Nome de usuário</th>
-                        <th>Nome completo</th>
-                        <th>E-mail</th>
-                        <th>CPF</th>
+                        <td>{{ usuario.id }}</td>
+
+                        <td>
+                            <span class="identificador-usuario">
+                                {{ usuario.username }}
+                            </span>
+                        </td>
+
+                        <td>{{ usuario.nome }}</td>
+
+                        <td>{{ usuario.email }}</td>
+
+                        <td>
+                            <span class="cpf-texto">
+                                {{ usuario.cpf }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="acoes-tabela">
+                                <a
+                                    class="link-tabela"
+                                    href="{% url 'usuario_detalhar' usuario.pk %}"
+                                >
+                                    Detalhes
+                                </a>
+
+                                <a
+                                    class="link-tabela"
+                                    href="{% url 'usuario_editar' usuario.pk %}"
+                                >
+                                    Editar
+                                </a>
+
+                                <a
+                                    class="link-perigo"
+                                    href="{% url 'usuario_excluir' usuario.pk %}"
+                                >
+                                    Excluir
+                                </a>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
+                {% endfor %}
+            </tbody>
 
-                <tbody>
-                    {% for usuario in usuarios %}
-                        <tr>
-                            <td>{{ usuario.id }}</td>
+        </table>
+    </div>
 
-                            <td>
-                                <span class="identificador-usuario">
-                                    {{ usuario.username }}
-                                </span>
-                            </td>
-
-                            <td>{{ usuario.nome }}</td>
-
-                            <td>{{ usuario.email }}</td>
-
-                            <td>
-                                <span class="cpf-texto">
-                                    {{ usuario.cpf }}
-                                </span>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-
-            </table>
-        </div>
-
-    {% else %}
+{% else %}
 
         <div class="estado-vazio">
 

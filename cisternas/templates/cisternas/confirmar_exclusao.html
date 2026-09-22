@@ -1,0 +1,39 @@
+{% extends "cisternas/base.html" %}
+
+{% block title %}
+    {{ titulo_pagina }} | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel confirmacao-exclusao">
+    <p class="pagina-sobre">Confirmação</p>
+
+    <h1>{{ titulo_pagina }}</h1>
+
+    <p>
+        Tem certeza de que deseja excluir
+        <strong>{{ objeto_nome }}</strong>?
+    </p>
+
+    {% if aviso_exclusao %}
+        <p class="aviso-exclusao">{{ aviso_exclusao }}</p>
+    {% endif %}
+
+    <p>Essa ação não poderá ser desfeita.</p>
+
+    <form method="post" class="formulario-acoes">
+        {% csrf_token %}
+
+        <button class="botao botao-perigo" type="submit">
+            Confirmar exclusão
+        </button>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url url_cancelar objeto_pk %}"
+        >
+            Cancelar
+        </a>
+    </form>
+</section>
+{% endblock %}
