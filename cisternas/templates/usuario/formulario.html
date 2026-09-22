@@ -2,7 +2,10 @@
 {% load static %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'cisternas/css/usuario_monitoramento.css' %}">
+<link
+    rel="stylesheet"
+    href="{% static 'cisternas/css/usuario_monitoramento.css' %}"
+>
 {% endblock %}
 
 {% block extra_js %}
@@ -10,7 +13,7 @@
 {% endblock %}
 
 {% block title %}
-Cadastrar usuário | Sistema de Cisternas
+{{ titulo_pagina }} | Sistema de Cisternas
 {% endblock %}
 
 {% block content %}
@@ -135,49 +138,51 @@ Cadastrar usuário | Sistema de Cisternas
 
         </div>
 
-        <div class="grade-dois-campos">
+        {% if not modo_edicao %}
+            <div class="grade-dois-campos">
 
-            <div class="campo-grupo">
-                <label for="{{ form.password1.id_for_label }}">
-                    {{ form.password1.label }}
-                </label>
+                <div class="campo-grupo">
+                    <label for="{{ form.password1.id_for_label }}">
+                        {{ form.password1.label }}
+                    </label>
 
-                {{ form.password1 }}
+                    {{ form.password1 }}
 
-                {% if form.password1.help_text %}
-                    <small class="ajuda-campo">
-                        {{ form.password1.help_text }}
-                    </small>
-                {% endif %}
+                    {% if form.password1.help_text %}
+                        <small class="ajuda-campo">
+                            {{ form.password1.help_text }}
+                        </small>
+                    {% endif %}
 
-                {% for error in form.password1.errors %}
-                    <small class="erro-campo">
-                        {{ error }}
-                    </small>
-                {% endfor %}
+                    {% for error in form.password1.errors %}
+                        <small class="erro-campo">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="{{ form.password2.id_for_label }}">
+                        {{ form.password2.label }}
+                    </label>
+
+                    {{ form.password2 }}
+
+                    {% if form.password2.help_text %}
+                        <small class="ajuda-campo">
+                            {{ form.password2.help_text }}
+                        </small>
+                    {% endif %}
+
+                    {% for error in form.password2.errors %}
+                        <small class="erro-campo">
+                            {{ error }}
+                        </small>
+                    {% endfor %}
+                </div>
+
             </div>
-
-            <div class="campo-grupo">
-                <label for="{{ form.password2.id_for_label }}">
-                    {{ form.password2.label }}
-                </label>
-
-                {{ form.password2 }}
-
-                {% if form.password2.help_text %}
-                    <small class="ajuda-campo">
-                        {{ form.password2.help_text }}
-                    </small>
-                {% endif %}
-
-                {% for error in form.password2.errors %}
-                    <small class="erro-campo">
-                        {{ error }}
-                    </small>
-                {% endfor %}
-            </div>
-
-        </div>
+        {% endif %}
 
         <div class="formulario-acoes">
 
@@ -185,7 +190,11 @@ Cadastrar usuário | Sistema de Cisternas
                 class="botao botao-primario"
                 type="submit"
             >
-                Cadastrar usuário
+                {% if modo_edicao %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar usuário
+                {% endif %}
             </button>
 
             <a

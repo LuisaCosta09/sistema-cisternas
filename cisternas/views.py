@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_http_methods
 
 from .forms import (
@@ -7,10 +7,10 @@ from .forms import (
     AlertaForm,
     CisternaForm,
     MonitoramentoForm,
+    UsuarioAtualizacaoForm,
     UsuarioForm,
 )
 from .models import Abastecimento, Alerta, Cisterna, Monitoramento, Usuario
-
 
 @require_GET
 def inicio(request):
@@ -107,6 +107,97 @@ def usuario_criar(request):
     return render(
         request,
         "usuario/formulario.html",
+        contexto,
+    )
+
+# CRUD de usuários
+
+
+@require_GET
+def usuario_detalhar(request, pk):
+    usuario = get_object_or_404(Usuario, pk=pk)
+
+    contexto = {
+        "titulo_pagina": "Detalhes do usuário",
+        "usuario": usuario,
+    }
+
+    return render(
+        request,
+        "usuario/detalhes.html",
+        contexto,
+    )
+
+
+@require_http_methods(["GET", "POST"])
+def usuario_editar(request, pk):
+    usuario = get_object_or_404(Usuario, pk=pk)
+
+    if request.method == "POST":
+        form = UsuarioAtualizacaoForm(
+            request.POST,
+            instance=usuario,
+        )
+
+        if form.is_valid():
+            usuario = form.save()
+
+            messages.success(
+                request,
+                f"Usuário {usuario.nome} atualizado com sucesso.",
+            )
+
+            return redirect(
+                "usuario_detalhar",
+                pk=usuario.pk,
+            )
+
+    else:
+        form = UsuarioAtualizacaoForm(instance=usuario)
+
+    contexto = {
+        "titulo_pagina": "Editar usuário",
+        "form": form,
+        "usuario": usuario,
+        "modo_edicao": True,
+    }
+
+    return render(
+        request,
+        "usuario/formulario.html",
+        contexto,
+    )
+
+
+@require_http_methods(["GET", "POST"])
+def usuario_excluir(request, pk):
+    usuario = get_object_or_404(Usuario, pk=pk)
+
+    if request.method == "POST":
+        nome = usuario.nome
+        usuario.delete()
+
+        messages.success(
+            request,
+            f"Usuário {nome} excluído com sucesso.",
+        )
+
+        return redirect("usuario_listar")
+
+    contexto = {
+        "titulo_pagina": "Excluir usuário",
+        "objeto_nome": usuario.nome,
+        "aviso_exclusao": (
+            "As cisternas e os monitoramentos pertencentes e "
+            "relacionados também serão excluídos."
+        ),
+        "url_cancelar": "usuario_detalhar",
+        "objeto_pk": usuario.pk,
+    }
+
+    return render(
+        request,
+        "cisternas/confirmar_exclusao.html",
         contexto,
     )
 

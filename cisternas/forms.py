@@ -406,6 +406,124 @@ class UsuarioForm(UserCreationForm):
         return cpf
 
 
+
+class UsuarioAtualizacaoForm(forms.ModelForm):
+    email = forms.EmailField(
+        label="E-mail",
+        required=True,
+        max_length=254,
+        widget=forms.EmailInput(
+            attrs={
+                "class": "campo-formulario",
+                "autocomplete": "email",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Usuario
+        fields = ("username", "email", "nome", "cpf")
+
+        labels = {
+            "username": "Nome de usuário",
+            "nome": "Nome completo",
+            "cpf": "CPF",
+        }
+
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "class": "campo-formulario",
+                    "autocomplete": "username",
+                }
+            ),
+            "nome": forms.TextInput(
+                attrs={
+                    "class": "campo-formulario",
+                    "maxlength": "255",
+                    "autocomplete": "name",
+                }
+            ),
+            "cpf": forms.TextInput(
+                attrs={
+                    "class": "campo-formulario",
+                    "maxlength": "11",
+                    "inputmode": "numeric",
+                    "autocomplete": "off",
+                }
+            ),
+        }
+
+    def clean_nome(self):
+        nome = self.cleaned_data.get("nome", "").strip()
+
+        if len(nome) < 3:
+            raise forms.ValidationError(
+                "Informe o nome completo do usuário."
+            )
+
+        return nome
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email", "").strip().lower()
+        usuarios_com_email = Usuario.objects.filter(email__iexact=email)
+
+        if self.instance.pk:
+            usuarios_com_email = usuarios_com_email.exclude(
+                pk=self.instance.pk
+            )
+
+        if usuarios_com_email.exists():
+            raise forms.ValidationError(
+                "Já existe um usuário cadastrado com este e-mail."
+            )
+
+        return email
+
+    def clean_cpf(self):
+        cpf_recebido = self.cleaned_data.get("cpf", "")
+
+        cpf = "".join(
+            caractere
+            for caractere in str(cpf_recebido)
+            if caractere.isdigit()
+        )
+
+        if len(cpf) != 11 or cpf == cpf[0] * 11:
+            raise forms.ValidationError(
+                "Informe um CPF válido."
+            )
+
+        soma_primeiro = sum(
+            int(cpf[indice]) * (10 - indice)
+            for indice in range(9)
+        )
+
+        resto_primeiro = (soma_primeiro * 10) % 11
+        primeiro_digito = (
+            0 if resto_primeiro == 10 else resto_primeiro
+        )
+
+        soma_segundo = sum(
+            int(cpf[indice]) * (11 - indice)
+            for indice in range(10)
+        )
+
+        resto_segundo = (soma_segundo * 10) % 11
+        segundo_digito = (
+            0 if resto_segundo == 10 else resto_segundo
+        )
+
+        if (
+            int(cpf[9]) != primeiro_digito
+            or int(cpf[10]) != segundo_digito
+        ):
+            raise forms.ValidationError(
+                "Informe um CPF válido."
+            )
+
+        return cpf
+
 class MonitoramentoForm(forms.ModelForm):
     class Meta:
         model = Monitoramento
