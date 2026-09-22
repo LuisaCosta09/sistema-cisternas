@@ -1,0 +1,115 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'cisternas/js/registros.js' %}"></script>
+{% endblock %}
+{% block title %}Cadastrar alerta | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel formulario-painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Alertas</p>
+            <h1>{{ titulo_pagina }}</h1>
+            <p class="pagina-descricao">
+                Registre um alerta associado a uma cisterna e informe
+                o tipo, a mensagem, o status e o momento do registro.
+            </p>
+        </div>
+        <a class="botao botao-secundario" href="{% url 'alerta_listar' %}">
+            Voltar para a listagem
+        </a>
+    </div>
+    <form method="post" novalidate class="formulario formulario-alerta">
+        {% csrf_token %}
+        <div class="formulario-informacao">
+            <strong>Sobre este cadastro</strong>
+            <p>
+                O alerta será associado somente à cisterna selecionada.
+                Nesta etapa o sistema registra e lista o alerta; edição e exclusão
+                não fazem parte desta entrega.
+            </p>
+        </div>
+        {% if form.non_field_errors %}
+            <div class="erros-gerais" role="alert">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="campo-grupo">
+            <label for="{{ form.cisterna.id_for_label }}">
+                {{ form.cisterna.label }}
+            </label>
+            {{ form.cisterna }}
+            {% if form.cisterna.help_text %}
+                <small class="ajuda-campo">{{ form.cisterna.help_text }}</small>
+            {% endif %}
+            {% for error in form.cisterna.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="grade-dois-campos">
+            <div class="campo-grupo">
+                <label for="{{ form.tipo.id_for_label }}">
+                    {{ form.tipo.label }}
+                </label>
+                {{ form.tipo }}
+                {% if form.tipo.help_text %}
+                    <small class="ajuda-campo">{{ form.tipo.help_text }}</small>
+                {% endif %}
+                {% for error in form.tipo.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="campo-grupo">
+                <label for="{{ form.status.id_for_label }}">
+                    {{ form.status.label }}
+                </label>
+                {{ form.status }}
+                {% if form.status.help_text %}
+                    <small class="ajuda-campo">{{ form.status.help_text }}</small>
+                {% endif %}
+                {% for error in form.status.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="campo-grupo campo-grupo-com-contador">
+            <label for="{{ form.mensagem.id_for_label }}">
+                {{ form.mensagem.label }}
+            </label>
+            {{ form.mensagem }}
+            <small id="contador-mensagem" class="contador-campo"></small>
+            {% if form.mensagem.help_text %}
+                <small class="ajuda-campo">{{ form.mensagem.help_text }}</small>
+            {% endif %}
+            {% for error in form.mensagem.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="campo-grupo">
+            <label for="{{ form.dataHora.id_for_label }}">
+                {{ form.dataHora.label }}
+            </label>
+            {{ form.dataHora }}
+            {% if form.dataHora.help_text %}
+                <small class="ajuda-campo">{{ form.dataHora.help_text }}</small>
+            {% endif %}
+            {% for error in form.dataHora.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="formulario-acoes">
+            <button class="botao botao-primario" type="submit">
+                Cadastrar alerta
+            </button>
+            <a class="botao botao-secundario" href="{% url 'alerta_listar' %}">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}

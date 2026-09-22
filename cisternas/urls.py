@@ -16,4 +16,24 @@ urlpatterns = [
  views.cisterna_criar,
  name="cisterna_criar",
  ),
+ path(
+ "alertas/",
+ views.alerta_listar,
+ name="alerta_listar",
+ ),
+ path(
+ "alertas/novo/",
+ views.alerta_criar,
+ name="alerta_criar",
+ ),
+ path(
+ "abastecimentos/",
+ views.abastecimento_listar,
+ name="abastecimento_listar",
+ ),
+ path(
+ "abastecimentos/novo/",
+ views.abastecimento_criar,
+ name="abastecimento_criar",
+ ),
 ]
