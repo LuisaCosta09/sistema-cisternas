@@ -1,0 +1,126 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+    rel="stylesheet"
+    href="{% static 'cisternas/css/usuario_monitoramento.css' %}"
+>
+{% endblock %}
+
+{% block title %}
+Monitoramentos | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel">
+
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Monitoramentos</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Total de monitoramentos registrados:
+                {{ quantidade_monitoramentos }}.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-primario"
+            href="{% url 'monitoramento_criar' %}"
+        >
+            Cadastrar monitoramento
+        </a>
+    </div>
+
+    {% if monitoramentos %}
+
+        <div class="tabela-container">
+            <table class="tabela-dados tabela-monitoramentos">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Cisterna</th>
+                        <th>Data e hora</th>
+                        <th>Nível da água</th>
+                        <th>Consumo</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for monitoramento in monitoramentos %}
+                        <tr>
+
+                            <td>
+                                {{ monitoramento.id }}
+                            </td>
+
+                            <td>
+                                {{ monitoramento.usuario.nome }}
+                            </td>
+
+                            <td>
+                                Cisterna {{ monitoramento.cisterna.id }}
+                                - {{ monitoramento.cisterna.descricao }}
+                            </td>
+
+                            <td>
+                                <span class="data-registro">
+                                    {{ monitoramento.dataHora|date:"d/m/Y H:i" }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="valor-medida">
+                                    {{ monitoramento.nivelAgua }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="valor-medida">
+                                    {{ monitoramento.consumo }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="situacao-monitoramento">
+                                    {{ monitoramento.situacao }}
+                                </span>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="estado-vazio">
+
+            <h2>Nenhum monitoramento cadastrado</h2>
+
+            <p>
+                Quando houver uma leitura, registre o usuário, a cisterna,
+                a data, o nível de água, o consumo e a situação.
+            </p>
+
+            <a
+                class="botao botao-primario"
+                href="{% url 'monitoramento_criar' %}"
+            >
+                Cadastrar primeiro monitoramento
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+    rel="stylesheet"
+    href="{% static 'cisternas/css/usuario_monitoramento.css' %}"
+>
+{% endblock %}
+
+{% block title %}
+Cadastrar monitoramento | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel formulario-painel">
+
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Monitoramentos</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Registre uma leitura de monitoramento e relacione-a ao usuário
+                e à cisterna correspondentes.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url 'monitoramento_listar' %}"
+        >
+            Voltar para a listagem
+        </a>
+    </div>
+
+    <form
+        method="post"
+        novalidate
+        class="formulario formulario-monitoramento"
+    >
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="erros-gerais" role="alert">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="grade-dois-campos">
+
+            <div class="campo-grupo">
+                <label for="{{ form.usuario.id_for_label }}">
+                    {{ form.usuario.label }}
+                </label>
+
+                {{ form.usuario }}
+
+                {% if form.usuario.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.usuario.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.usuario.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+            <div class="campo-grupo">
+                <label for="{{ form.cisterna.id_for_label }}">
+                    {{ form.cisterna.label }}
+                </label>
+
+                {{ form.cisterna }}
+
+                {% if form.cisterna.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.cisterna.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.cisterna.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="campo-grupo">
+            <label for="{{ form.dataHora.id_for_label }}">
+                {{ form.dataHora.label }}
+            </label>
+
+            {{ form.dataHora }}
+
+            {% if form.dataHora.help_text %}
+                <small class="ajuda-campo">
+                    {{ form.dataHora.help_text }}
+                </small>
+            {% endif %}
+
+            {% for error in form.dataHora.errors %}
+                <small class="erro-campo">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+
+        <div class="grade-dois-campos">
+
+            <div class="campo-grupo">
+                <label for="{{ form.nivelAgua.id_for_label }}">
+                    {{ form.nivelAgua.label }}
+                </label>
+
+                {{ form.nivelAgua }}
+
+                {% if form.nivelAgua.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.nivelAgua.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.nivelAgua.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+            <div class="campo-grupo">
+                <label for="{{ form.consumo.id_for_label }}">
+                    {{ form.consumo.label }}
+                </label>
+
+                {{ form.consumo }}
+
+                {% if form.consumo.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.consumo.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.consumo.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="campo-grupo">
+            <label for="{{ form.situacao.id_for_label }}">
+                {{ form.situacao.label }}
+            </label>
+
+            {{ form.situacao }}
+
+            {% if form.situacao.help_text %}
+                <small class="ajuda-campo">
+                    {{ form.situacao.help_text }}
+                </small>
+            {% endif %}
+
+            {% for error in form.situacao.errors %}
+                <small class="erro-campo">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+
+        <div class="formulario-acoes">
+
+            <button
+                class="botao botao-primario"
+                type="submit"
+            >
+                Cadastrar monitoramento
+            </button>
+
+            <a
+                class="botao botao-secundario"
+                href="{% url 'monitoramento_listar' %}"
+            >
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</section>
+{% endblock %}

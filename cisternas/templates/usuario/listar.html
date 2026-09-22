@@ -1,0 +1,102 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link
+    rel="stylesheet"
+    href="{% static 'cisternas/css/usuario_monitoramento.css' %}"
+>
+{% endblock %}
+
+{% block title %}
+Usuários | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel">
+
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Usuários</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Total de usuários cadastrados: {{ quantidade_usuarios }}.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-primario"
+            href="{% url 'usuario_criar' %}"
+        >
+            Cadastrar usuário
+        </a>
+    </div>
+
+    {% if usuarios %}
+
+        <div class="tabela-container">
+            <table class="tabela-dados tabela-usuarios">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome de usuário</th>
+                        <th>Nome completo</th>
+                        <th>E-mail</th>
+                        <th>CPF</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario.id }}</td>
+
+                            <td>
+                                <span class="identificador-usuario">
+                                    {{ usuario.username }}
+                                </span>
+                            </td>
+
+                            <td>{{ usuario.nome }}</td>
+
+                            <td>{{ usuario.email }}</td>
+
+                            <td>
+                                <span class="cpf-texto">
+                                    {{ usuario.cpf }}
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="estado-vazio">
+
+            <h2>Nenhum usuário cadastrado</h2>
+
+            <p>
+                Cadastre um usuário antes de relacioná-lo a uma cisterna,
+                monitoramento ou abastecimento.
+            </p>
+
+            <a
+                class="botao botao-primario"
+                href="{% url 'usuario_criar' %}"
+            >
+                Cadastrar primeiro usuário
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+{% endblock %}

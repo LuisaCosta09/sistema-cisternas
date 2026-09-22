@@ -1,0 +1,203 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/usuario_monitoramento.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'cisternas/js/usuario.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+Cadastrar usuário | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel formulario-painel">
+
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Usuários</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Crie o usuário que será relacionado às cisternas,
+                monitoramentos e abastecimentos do sistema.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url 'usuario_listar' %}"
+        >
+            Voltar para a listagem
+        </a>
+    </div>
+
+    <form
+        method="post"
+        novalidate
+        class="formulario formulario-usuario"
+    >
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="erros-gerais" role="alert">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="campo-grupo">
+            <label for="{{ form.username.id_for_label }}">
+                {{ form.username.label }}
+            </label>
+
+            {{ form.username }}
+
+            {% if form.username.help_text %}
+                <small class="ajuda-campo">
+                    {{ form.username.help_text }}
+                </small>
+            {% endif %}
+
+            {% for error in form.username.errors %}
+                <small class="erro-campo">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+
+        <div class="campo-grupo">
+            <label for="{{ form.nome.id_for_label }}">
+                {{ form.nome.label }}
+            </label>
+
+            {{ form.nome }}
+
+            {% if form.nome.help_text %}
+                <small class="ajuda-campo">
+                    {{ form.nome.help_text }}
+                </small>
+            {% endif %}
+
+            {% for error in form.nome.errors %}
+                <small class="erro-campo">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+
+        <div class="grade-dois-campos">
+
+            <div class="campo-grupo">
+                <label for="{{ form.email.id_for_label }}">
+                    {{ form.email.label }}
+                </label>
+
+                {{ form.email }}
+
+                {% if form.email.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.email.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.email.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+            <div class="campo-grupo">
+                <label for="{{ form.cpf.id_for_label }}">
+                    {{ form.cpf.label }}
+                </label>
+
+                {{ form.cpf }}
+
+                {% if form.cpf.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.cpf.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.cpf.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="grade-dois-campos">
+
+            <div class="campo-grupo">
+                <label for="{{ form.password1.id_for_label }}">
+                    {{ form.password1.label }}
+                </label>
+
+                {{ form.password1 }}
+
+                {% if form.password1.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.password1.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.password1.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+            <div class="campo-grupo">
+                <label for="{{ form.password2.id_for_label }}">
+                    {{ form.password2.label }}
+                </label>
+
+                {{ form.password2 }}
+
+                {% if form.password2.help_text %}
+                    <small class="ajuda-campo">
+                        {{ form.password2.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in form.password2.errors %}
+                    <small class="erro-campo">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="formulario-acoes">
+
+            <button
+                class="botao botao-primario"
+                type="submit"
+            >
+                Cadastrar usuário
+            </button>
+
+            <a
+                class="botao botao-secundario"
+                href="{% url 'usuario_listar' %}"
+            >
+                Cancelar
+            </a>
+
+        </div>
+
+    </form>
+
+</section>
+{% endblock %}
