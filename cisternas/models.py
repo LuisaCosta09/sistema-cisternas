@@ -85,6 +85,9 @@ class Alerta(models.Model):
     status = models.CharField(max_length=255)
     dataHora = models.DateTimeField()
 
+    class Meta:
+        ordering = ("-dataHora", "-id")
+
     def __str__(self):
         return f"Alerta {self.id} - {self.tipo}"
 
@@ -101,10 +104,35 @@ class Abastecimento(models.Model):
         related_name="abastecimentos",
     )
     dataHora = models.DateTimeField()
-    quantidadeAgua = models.FloatField()
+    quantidadeAgua = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(Decimal("0.01")),
+        ],
+    )
     tipo = models.CharField(max_length=255)
     observacao = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ("-dataHora", "-id")
+
+    def clean(self):
+        super().clean()
+
+        if (
+            self.usuario_id
+            and self.cisterna_id
+            and self.cisterna.usuario_id != self.usuario_id
+        ):
+            raise ValidationError(
+                {
+                    "cisterna": (
+                        "A cisterna selecionada não pertence ao usuário informado."
+                    )
+                }
+            )
+
     def __str__(self):
-        return f"Abastecimento {self.id}"
+        return f"Abastecimento {self.id} - Cisterna {self.cisterna_id}"

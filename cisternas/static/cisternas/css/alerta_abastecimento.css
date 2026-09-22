@@ -1,0 +1,166 @@
+.formulario-alerta textarea,
+.formulario-abastecimento textarea {
+    line-height: 1.5;
+}
+
+.registro-cisterna {
+    min-width: 185px;
+    display: grid;
+    gap: 3px;
+}
+
+.registro-cisterna strong {
+    color: #294f61;
+}
+
+.registro-cisterna small {
+    color: #6d808a;
+    line-height: 1.35;
+}
+
+.tipo-registro {
+    display: inline-flex;
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #edf4f7;
+    color: #315f73;
+    font-size: 0.84rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-registro {
+    display: inline-flex;
+    width: fit-content;
+    padding: 4px 8px;
+    border: 1px solid #cbd8de;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #405b68;
+    font-size: 0.84rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.mensagem-alerta {
+    min-width: 220px;
+    max-width: 340px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.observacao-registro {
+    min-width: 200px;
+    max-width: 320px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.quantidade-registro {
+    color: #31596c;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.data-registro {
+    color: #526975;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.tabela-alertas td:nth-child(1),
+.tabela-abastecimentos td:nth-child(1) {
+    width: 70px;
+    color: #657983;
+}
+
+.tabela-alertas td:nth-child(3),
+.tabela-alertas td:nth-child(5),
+.tabela-abastecimentos td:nth-child(6),
+.tabela-abastecimentos td:nth-child(8) {
+    vertical-align: middle;
+}
+
+.formulario-alerta .campo-grupo,
+.formulario-abastecimento .campo-grupo {
+    min-width: 0;
+}
+
+.formulario-alerta textarea.campo-formulario,
+.formulario-abastecimento textarea.campo-formulario {
+    min-height: 120px;
+}
+
+.formulario-alerta input[type="datetime-local"],
+.formulario-abastecimento input[type="datetime-local"] {
+    min-height: 46px;
+}
+
+.formulario-abastecimento input[type="number"] {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+    .registro-cisterna {
+        min-width: 170px;
+    }
+
+    .mensagem-alerta,
+    .observacao-registro {
+        min-width: 190px;
+    }
+}
+
+.formulario-informacao {
+    padding: 14px 16px;
+    border: 1px solid #d7e2e7;
+    border-radius: 10px;
+    background: #f8fbfc;
+}
+
+.formulario-informacao strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #2b5062;
+}
+
+.formulario-informacao p {
+    margin: 0;
+    color: #667b86;
+    line-height: 1.5;
+}
+
+.contador-campo {
+    justify-self: end;
+    color: #71838c;
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.contador-campo[data-proximo-limite="true"] {
+    color: #9a5b18;
+    font-weight: 700;
+}
+
+.campo-grupo-com-contador {
+    grid-template-columns: 1fr auto;
+}
+
+.campo-grupo-com-contador > label,
+.campo-grupo-com-contador > textarea,
+.campo-grupo-com-contador > .ajuda-campo,
+.campo-grupo-com-contador > .erro-campo {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+    .formulario-informacao {
+        padding: 12px;
+    }
+
+    .contador-campo {
+        justify-self: start;
+    }
+}

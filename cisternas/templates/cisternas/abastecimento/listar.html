@@ -1,0 +1,84 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+{% block title %}Abastecimentos | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Abastecimentos</p>
+            <h1>{{ titulo_pagina }}</h1>
+            <p class="pagina-descricao">
+                Total de abastecimentos registrados: {{ quantidade_abastecimentos }}.
+            </p>
+        </div>
+        <a class="botao botao-primario" href="{% url 'abastecimento_criar' %}">
+            Cadastrar abastecimento
+        </a>
+    </div>
+    {% if abastecimentos %}
+        <div class="tabela-container">
+            <table class="tabela-dados tabela-abastecimentos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuário</th>
+                        <th>Cisterna</th>
+                        <th>Data e hora</th>
+                        <th>Quantidade</th>
+                        <th>Tipo</th>
+                        <th>Observação</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for abastecimento in abastecimentos %}
+                        <tr>
+                            <td>{{ abastecimento.id }}</td>
+                            <td>{{ abastecimento.usuario.nome }}</td>
+                            <td>
+                                <div class="registro-cisterna">
+                                    <strong>Cisterna {{ abastecimento.cisterna.id }}</strong>
+                                    <small>{{ abastecimento.cisterna.descricao }}</small>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="data-registro">
+                                    {{ abastecimento.dataHora|date:"d/m/Y H:i" }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="quantidade-registro">
+                                    {{ abastecimento.quantidadeAgua }} L
+                                </span>
+                            </td>
+                            <td>
+                                <span class="tipo-registro">{{ abastecimento.tipo }}</span>
+                            </td>
+                            <td class="observacao-registro">
+                                {{ abastecimento.observacao }}
+                            </td>
+                            <td>
+                                <span class="status-registro">{{ abastecimento.status }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="estado-vazio">
+            <h2>Nenhum abastecimento cadastrado</h2>
+            <p>
+                Registre o primeiro abastecimento informando o usuário,
+                a cisterna, a quantidade de água e os demais dados solicitados.
+            </p>
+            <a class="botao botao-primario" href="{% url 'abastecimento_criar' %}">
+                Cadastrar primeiro abastecimento
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+{% block title %}Alertas | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Alertas</p>
+            <h1>{{ titulo_pagina }}</h1>
+            <p class="pagina-descricao">
+                Total de alertas registrados: {{ quantidade_alertas }}.
+            </p>
+        </div>
+        <a class="botao botao-primario" href="{% url 'alerta_criar' %}">
+            Cadastrar alerta
+        </a>
+    </div>
+    {% if alertas %}
+        <div class="tabela-container">
+            <table class="tabela-dados tabela-alertas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cisterna</th>
+                        <th>Tipo</th>
+                        <th>Mensagem</th>
+                        <th>Status</th>
+                        <th>Data e hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alerta in alertas %}
+                        <tr>
+                            <td>{{ alerta.id }}</td>
+                            <td>
+                                <div class="registro-cisterna">
+                                    <strong>Cisterna {{ alerta.cisterna.id }}</strong>
+                                    <small>{{ alerta.cisterna.descricao }}</small>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="tipo-registro">{{ alerta.tipo }}</span>
+                            </td>
+                            <td class="mensagem-alerta">{{ alerta.mensagem }}</td>
+                            <td>
+                                <span class="status-registro">{{ alerta.status }}</span>
+                            </td>
+                            <td>
+                                <span class="data-registro">
+                                    {{ alerta.dataHora|date:"d/m/Y H:i" }}
+                                </span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="estado-vazio">
+            <h2>Nenhum alerta cadastrado</h2>
+            <p>
+                Cadastre um alerta quando for necessário registrar uma
+                ocorrência relacionada a alguma cisterna.
+            </p>
+            <a class="botao botao-primario" href="{% url 'alerta_criar' %}">
+                Cadastrar primeiro alerta
+            </a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
