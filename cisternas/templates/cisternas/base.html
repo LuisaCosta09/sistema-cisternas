@@ -1,4 +1,3 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -22,28 +21,31 @@
                 Sistema de Cisternas
             </a>
 
-           
-<nav class="navegacao" aria-label="Navegação principal">
-    <a href="{% url 'cisterna_listar' %}">
-        Cisternas
-    </a>
+            <nav class="navegacao" aria-label="Navegação principal">
+                <a href="{% url 'cisterna_listar' %}">
+                    Cisternas
+                </a>
 
-    <a href="{% url 'usuario_listar' %}">
-        Usuários
-    </a>
+                <a href="{% url 'usuario_listar' %}">
+                    Usuários
+                </a>
 
-    <a href="{% url 'monitoramento_listar' %}">
-        Monitoramentos
-    </a>
+                <a href="{% url 'monitoramento_listar' %}">
+                    Monitoramentos
+                </a>
 
+                <a href="{% url 'alerta_listar' %}">
+                    Alertas
+                </a>
 
-</nav>
-
+                <a href="{% url 'abastecimento_listar' %}">
+                    Abastecimentos
+                </a>
+            </nav>
         </div>
     </header>
 
     <main class="conteudo-principal">
-
         {% if messages %}
             <section class="mensagens" aria-label="Mensagens do sistema">
                 {% for message in messages %}
@@ -55,10 +57,8 @@
         {% endif %}
 
         {% block content %}{% endblock %}
-
     </main>
 
     {% block extra_js %}{% endblock %}
-
 </body>
 </html>

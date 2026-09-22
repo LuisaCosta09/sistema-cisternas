@@ -1,0 +1,140 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'cisternas/js/registros.js' %}"></script>
+{% endblock %}
+{% block title %}Cadastrar abastecimento | Sistema de Cisternas{% endblock %}
+{% block content %}
+<section class="painel formulario-painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Abastecimentos</p>
+            <h1>{{ titulo_pagina }}</h1>
+            <p class="pagina-descricao">
+                Registre o abastecimento de uma cisterna e mantenha a relação
+                correta entre usuário, cisterna e quantidade de água.
+            </p>
+        </div>
+        <a class="botao botao-secundario" href="{% url 'abastecimento_listar' %}">
+            Voltar para a listagem
+        </a>
+    </div>
+    <form method="post" novalidate class="formulario formulario-abastecimento">
+        {% csrf_token %}
+        <div class="formulario-informacao">
+            <strong>Sobre este cadastro</strong>
+            <p>
+                O usuário e a cisterna precisam ser compatíveis. O formulário
+                valida essa relação antes de salvar o abastecimento no banco.
+            </p>
+        </div>
+        {% if form.non_field_errors %}
+            <div class="erros-gerais" role="alert">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="grade-dois-campos">
+            <div class="campo-grupo">
+                <label for="{{ form.usuario.id_for_label }}">
+                    {{ form.usuario.label }}
+                </label>
+                {{ form.usuario }}
+                {% if form.usuario.help_text %}
+                    <small class="ajuda-campo">{{ form.usuario.help_text }}</small>
+                {% endif %}
+                {% for error in form.usuario.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="campo-grupo">
+                <label for="{{ form.cisterna.id_for_label }}">
+                    {{ form.cisterna.label }}
+                </label>
+                {{ form.cisterna }}
+                {% if form.cisterna.help_text %}
+                    <small class="ajuda-campo">{{ form.cisterna.help_text }}</small>
+                {% endif %}
+                {% for error in form.cisterna.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="grade-dois-campos">
+            <div class="campo-grupo">
+                <label for="{{ form.dataHora.id_for_label }}">
+                    {{ form.dataHora.label }}
+                </label>
+                {{ form.dataHora }}
+                {% if form.dataHora.help_text %}
+                    <small class="ajuda-campo">{{ form.dataHora.help_text }}</small>
+                {% endif %}
+                {% for error in form.dataHora.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="campo-grupo">
+                <label for="{{ form.quantidadeAgua.id_for_label }}">
+                    {{ form.quantidadeAgua.label }}
+                </label>
+                {{ form.quantidadeAgua }}
+                {% if form.quantidadeAgua.help_text %}
+                    <small class="ajuda-campo">{{ form.quantidadeAgua.help_text }}</small>
+                {% endif %}
+                {% for error in form.quantidadeAgua.errors %}
+                    <small class="erro-campo">{{ error }}</small>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="campo-grupo">
+            <label for="{{ form.tipo.id_for_label }}">
+                {{ form.tipo.label }}
+            </label>
+            {{ form.tipo }}
+            {% if form.tipo.help_text %}
+                <small class="ajuda-campo">{{ form.tipo.help_text }}</small>
+            {% endif %}
+            {% for error in form.tipo.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="campo-grupo campo-grupo-com-contador">
+            <label for="{{ form.observacao.id_for_label }}">
+                {{ form.observacao.label }}
+            </label>
+            {{ form.observacao }}
+            <small id="contador-observacao" class="contador-campo"></small>
+            {% if form.observacao.help_text %}
+                <small class="ajuda-campo">{{ form.observacao.help_text }}</small>
+            {% endif %}
+            {% for error in form.observacao.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="campo-grupo">
+            <label for="{{ form.status.id_for_label }}">
+                {{ form.status.label }}
+            </label>
+            {{ form.status }}
+            {% if form.status.help_text %}
+                <small class="ajuda-campo">{{ form.status.help_text }}</small>
+            {% endif %}
+            {% for error in form.status.errors %}
+                <small class="erro-campo">{{ error }}</small>
+            {% endfor %}
+        </div>
+        <div class="formulario-acoes">
+            <button class="botao botao-primario" type="submit">
+                Cadastrar abastecimento
+            </button>
+            <a class="botao botao-secundario" href="{% url 'abastecimento_listar' %}">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</section>
+{% endblock %}
