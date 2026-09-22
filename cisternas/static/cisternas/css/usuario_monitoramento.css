@@ -1,0 +1,140 @@
+.formulario-usuario .campo-grupo,
+.formulario-monitoramento .campo-grupo {
+    position: relative;
+}
+
+.formulario-usuario input[type="password"] {
+    padding-right: 42px;
+}
+
+.bloco-orientacao {
+    padding: 14px 16px;
+    border: 1px solid #d9e4e9;
+    border-radius: 10px;
+    background: #f8fbfc;
+}
+
+.bloco-orientacao h2 {
+    margin: 0 0 6px;
+    color: #2d4d5e;
+    font-size: 1rem;
+}
+
+.bloco-orientacao p {
+    margin: 0;
+    color: #617682;
+    line-height: 1.5;
+}
+
+.usuario-resumo {
+    display: grid;
+    gap: 4px;
+}
+
+.usuario-resumo strong {
+    color: #284a5b;
+}
+
+.usuario-resumo small {
+    color: #6e818b;
+}
+
+.identificador-usuario {
+    display: inline-flex;
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #edf4f7;
+    color: #315c70;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.cpf-texto {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.monitoramento-cisterna {
+    display: grid;
+    gap: 3px;
+}
+
+.monitoramento-cisterna strong {
+    color: #2d4d5e;
+}
+
+.monitoramento-cisterna small {
+    color: #6b7f89;
+}
+
+.valor-medida {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    color: #31596c;
+}
+
+.situacao-monitoramento {
+    min-width: 150px;
+    line-height: 1.45;
+}
+
+.data-registro {
+    white-space: nowrap;
+    color: #526975;
+    font-variant-numeric: tabular-nums;
+}
+
+.formulario-monitoramento .grade-dois-campos {
+    align-items: start;
+}
+
+.formulario-monitoramento input[type="number"] {
+    text-align: left;
+}
+
+.resumo-listagem {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #647984;
+}
+
+.resumo-listagem strong {
+    color: #2d5366;
+}
+
+.tabela-usuarios td:nth-child(1),
+.tabela-monitoramentos td:nth-child(1) {
+    width: 70px;
+    color: #637782;
+}
+
+.tabela-usuarios td:nth-child(5) {
+    min-width: 130px;
+}
+
+.tabela-monitoramentos td:nth-child(4) {
+    min-width: 145px;
+}
+
+.tabela-monitoramentos td:nth-child(7) {
+    min-width: 170px;
+}
+
+@media (max-width: 760px) {
+    .bloco-orientacao {
+        padding: 12px;
+    }
+
+    .usuario-resumo {
+        min-width: 180px;
+    }
+
+    .monitoramento-cisterna {
+        min-width: 210px;
+    }
+}
