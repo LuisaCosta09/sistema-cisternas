@@ -73,4 +73,38 @@ name="monitoramento_criar",
  views.abastecimento_criar,
  name="abastecimento_criar",
  ),
+path(
+    "alertas/<int:pk>/",
+    views.alerta_detalhar,
+    name="alerta_detalhar",
+),
+
+path(
+    "alertas/<int:pk>/editar/",
+    views.alerta_editar,
+    name="alerta_editar",
+),
+
+path(
+    "alertas/<int:pk>/excluir/",
+    views.alerta_excluir,
+    name="alerta_excluir",
+),
+path(
+    "abastecimentos/<int:pk>/",
+    views.abastecimento_detalhar,
+    name="abastecimento_detalhar",
+),
+
+path(
+    "abastecimentos/<int:pk>/editar/",
+    views.abastecimento_editar,
+    name="abastecimento_editar",
+),
+
+path(
+    "abastecimentos/<int:pk>/excluir/",
+    views.abastecimento_excluir,
+    name="abastecimento_excluir",
+),
 ]

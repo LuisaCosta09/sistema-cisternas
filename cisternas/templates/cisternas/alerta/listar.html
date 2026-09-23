@@ -29,6 +29,7 @@
                         <th>Mensagem</th>
                         <th>Status</th>
                         <th>Data e hora</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,31 @@
                                     {{ alerta.dataHora|date:"d/m/Y H:i" }}
                                 </span>
                             </td>
+
+                            <td>
+                            <div class="acoes-tabela">
+                                <a
+                                    class="link-tabela"
+                                    href="{% url 'alerta_detalhar' alerta.pk %}"
+                                >
+                                    Detalhes
+                                </a>
+
+                                <a
+                                    class="link-tabela"
+                                    href="{% url 'alerta_editar' alerta.pk %}"
+                                >
+                                    Editar
+                                </a>
+
+                                <a
+                                    class="link-perigo"
+                                    href="{% url 'alerta_excluir' alerta.pk %}"
+                                >
+                                    Excluir
+                                </a>
+                            </div>
+                        </td>
                         </tr>
                     {% endfor %}
                 </tbody>

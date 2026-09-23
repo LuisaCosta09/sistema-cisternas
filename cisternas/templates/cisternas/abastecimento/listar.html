@@ -31,6 +31,7 @@
                         <th>Tipo</th>
                         <th>Observação</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +64,30 @@
                             <td>
                                 <span class="status-registro">{{ abastecimento.status }}</span>
                             </td>
+                            <td>
+                        <div class="acoes-tabela">
+                            <a
+                                class="link-tabela"
+                                href="{% url 'abastecimento_detalhar' abastecimento.pk %}"
+                            >
+                                Detalhes
+                            </a>
+
+                            <a
+                                class="link-tabela"
+                                href="{% url 'abastecimento_editar' abastecimento.pk %}"
+                            >
+                                Editar
+                            </a>
+
+                            <a
+                                class="link-perigo"
+                                href="{% url 'abastecimento_excluir' abastecimento.pk %}"
+                            >
+                                Excluir
+                            </a>
+                        </div>
+                    </td>
                         </tr>
                     {% endfor %}
                 </tbody>

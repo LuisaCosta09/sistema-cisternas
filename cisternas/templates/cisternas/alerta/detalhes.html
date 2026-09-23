@@ -1,0 +1,87 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+
+{% block title %}Alerta {{ alerta.id }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Alertas</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Informações completas do alerta selecionado.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url 'alerta_listar' %}"
+        >
+            Voltar para a listagem
+        </a>
+    </div>
+
+    <div class="grade-detalhes">
+        <div class="detalhe-item">
+            <strong>ID</strong>
+            <span>{{ alerta.id }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Cisterna</strong>
+            <span>
+                Cisterna {{ alerta.cisterna.id }} -
+                {{ alerta.cisterna.descricao }}
+            </span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Responsável</strong>
+            <span>{{ alerta.cisterna.usuario.nome }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Tipo</strong>
+            <span>{{ alerta.tipo }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Status</strong>
+            <span>{{ alerta.status }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Data e hora</strong>
+            <span>{{ alerta.dataHora|date:"d/m/Y H:i" }}</span>
+        </div>
+
+        <div class="detalhe-item detalhe-largo">
+            <strong>Mensagem</strong>
+            <span>{{ alerta.mensagem }}</span>
+        </div>
+    </div>
+
+    <div class="formulario-acoes">
+        <a
+            class="botao botao-primario"
+            href="{% url 'alerta_editar' alerta.pk %}"
+        >
+            Editar alerta
+        </a>
+
+        <a
+            class="botao botao-perigo"
+            href="{% url 'alerta_excluir' alerta.pk %}"
+        >
+            Excluir alerta
+        </a>
+    </div>
+</section>
+{% endblock %}

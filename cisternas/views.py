@@ -354,3 +354,167 @@ def abastecimento_criar(request):
         contexto,
     )
 
+# CRUD de alertas
+@require_GET
+def alerta_detalhar(request, pk):
+    alerta = get_object_or_404(
+        Alerta.objects.select_related("cisterna", "cisterna__usuario"),
+        pk=pk,
+    )
+    contexto = {
+        "titulo_pagina": "Detalhes do alerta",
+        "alerta": alerta,
+    }
+    return render(request, "cisternas/alerta/detalhes.html", contexto)
+
+@require_http_methods(["GET", "POST"])
+def alerta_editar(request, pk):
+    alerta = get_object_or_404(Alerta, pk=pk)
+
+    if request.method == "POST":
+        form = AlertaForm(request.POST, instance=alerta)
+
+        if form.is_valid():
+            alerta = form.save()
+
+            messages.success(
+                request,
+                f"Alerta {alerta.id} atualizado com sucesso.",
+            )
+
+            return redirect("alerta_detalhar", pk=alerta.pk)
+
+    else:
+        form = AlertaForm(instance=alerta)
+
+    contexto = {
+        "titulo_pagina": "Editar alerta",
+        "form": form,
+        "alerta": alerta,
+        "modo_edicao": True,
+    }
+
+    return render(request, "cisternas/alerta/formulario.html", contexto)
+
+
+@require_http_methods(["GET", "POST"])
+def alerta_excluir(request, pk):
+    alerta = get_object_or_404(Alerta, pk=pk)
+
+    if request.method == "POST":
+        identificador = alerta.id
+
+        alerta.delete()
+
+        messages.success(
+            request,
+            f"Alerta {identificador} excluído com sucesso.",
+        )
+
+        return redirect("alerta_listar")
+
+    contexto = {
+        "titulo_pagina": "Excluir alerta",
+        "objeto_nome": f"Alerta {alerta.id}",
+        "url_cancelar": "alerta_detalhar",
+        "objeto_pk": alerta.pk,
+    }
+
+    return render(
+        request,
+        "cisternas/confirmar_exclusao.html",
+        contexto,
+    )
+
+    # CRUD de abastecimentos
+@require_GET
+def abastecimento_detalhar(request, pk):
+    abastecimento = get_object_or_404(
+        Abastecimento.objects.select_related("usuario", "cisterna"),
+        pk=pk,
+    )
+
+    contexto = {
+        "titulo_pagina": "Detalhes do abastecimento",
+        "abastecimento": abastecimento,
+    }
+
+    return render(
+        request,
+        "cisternas/abastecimento/detalhes.html",
+        contexto,
+    )
+
+@require_http_methods(["GET", "POST"])
+def abastecimento_editar(request, pk):
+    abastecimento = get_object_or_404(
+        Abastecimento,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+        form = AbastecimentoForm(
+            request.POST,
+            instance=abastecimento,
+        )
+
+        if form.is_valid():
+            abastecimento = form.save()
+
+            messages.success(
+                request,
+                f"Abastecimento {abastecimento.id} atualizado com sucesso.",
+            )
+
+            return redirect(
+                "abastecimento_detalhar",
+                pk=abastecimento.pk,
+            )
+
+    else:
+        form = AbastecimentoForm(instance=abastecimento)
+
+    contexto = {
+        "titulo_pagina": "Editar abastecimento",
+        "form": form,
+        "abastecimento": abastecimento,
+        "modo_edicao": True,
+    }
+
+    return render(
+        request,
+        "cisternas/abastecimento/formulario.html",
+        contexto,
+    )
+
+@require_http_methods(["GET", "POST"])
+def abastecimento_excluir(request, pk):
+    abastecimento = get_object_or_404(
+        Abastecimento,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+        identificador = abastecimento.id
+
+        abastecimento.delete()
+
+        messages.success(
+            request,
+            f"Abastecimento {identificador} excluído com sucesso.",
+        )
+
+        return redirect("abastecimento_listar")
+
+    contexto = {
+        "titulo_pagina": "Excluir abastecimento",
+        "objeto_nome": f"Abastecimento {abastecimento.id}",
+        "url_cancelar": "abastecimento_detalhar",
+        "objeto_pk": abastecimento.pk,
+    }
+
+    return render(
+        request,
+        "cisternas/confirmar_exclusao.html",
+        contexto,
+    )
