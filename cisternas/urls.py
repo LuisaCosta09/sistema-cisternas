@@ -1,110 +1,135 @@
 from django.urls import path
 from . import views
+
 urlpatterns = [
-
-path(
-"usuarios/",
-views.usuario_listar,
-name="usuario_listar",
-),
-path(
-"usuarios/novo/",
-views.usuario_criar,
-name="usuario_criar",
-),
-path(
-"usuarios/<int:pk>/",
-views.usuario_detalhar,
-name="usuario_detalhar",
-),
-path(
-"usuarios/<int:pk>/editar/",
-views.usuario_editar,
-name="usuario_editar",
-),
-path(
-"usuarios/<int:pk>/excluir/",
-views.usuario_excluir,
-name="usuario_excluir",
-),
-path(
-"monitoramentos/",
-views.monitoramento_listar,
-name="monitoramento_listar",
-),
-path(
-"monitoramentos/novo/",
-views.monitoramento_criar,
-name="monitoramento_criar",
-),
-
- path(
- "",
- views.inicio,
- name="inicio",
- ),
- path(
- "cisternas/",
- views.cisterna_listar,
- name="cisterna_listar",
- ),
- path(
- "cisternas/nova/",
- views.cisterna_criar,
- name="cisterna_criar",
- ),
- path(
- "alertas/",
- views.alerta_listar,
- name="alerta_listar",
- ),
- path(
- "alertas/novo/",
- views.alerta_criar,
- name="alerta_criar",
- ),
- path(
- "abastecimentos/",
- views.abastecimento_listar,
- name="abastecimento_listar",
- ),
- path(
- "abastecimentos/novo/",
- views.abastecimento_criar,
- name="abastecimento_criar",
- ),
-path(
-    "alertas/<int:pk>/",
-    views.alerta_detalhar,
-    name="alerta_detalhar",
-),
-
-path(
-    "alertas/<int:pk>/editar/",
-    views.alerta_editar,
-    name="alerta_editar",
-),
-
-path(
-    "alertas/<int:pk>/excluir/",
-    views.alerta_excluir,
-    name="alerta_excluir",
-),
-path(
-    "abastecimentos/<int:pk>/",
-    views.abastecimento_detalhar,
-    name="abastecimento_detalhar",
-),
-
-path(
-    "abastecimentos/<int:pk>/editar/",
-    views.abastecimento_editar,
-    name="abastecimento_editar",
-),
-
-path(
-    "abastecimentos/<int:pk>/excluir/",
-    views.abastecimento_excluir,
-    name="abastecimento_excluir",
-),
+    path(
+        "usuarios/",
+        views.usuario_listar,
+        name="usuario_listar",
+    ),
+    path(
+        "usuarios/novo/",
+        views.usuario_criar,
+        name="usuario_criar",
+    ),
+    path(
+        "usuarios/<int:pk>/",
+        views.usuario_detalhar,
+        name="usuario_detalhar",
+    ),
+    path(
+        "usuarios/<int:pk>/editar/",
+        views.usuario_editar,
+        name="usuario_editar",
+    ),
+    path(
+        "usuarios/<int:pk>/excluir/",
+        views.usuario_excluir,
+        name="usuario_excluir",
+    ),
+    path(
+        "monitoramentos/",
+        views.monitoramento_listar,
+        name="monitoramento_listar",
+    ),
+    path(
+        "monitoramentos/novo/",
+        views.monitoramento_criar,
+        name="monitoramento_criar",
+    ),
+    path(
+        "monitoramentos/<int:pk>/",
+        views.monitoramento_detalhar,
+        name="monitoramento_detalhar",
+    ),
+    path(
+        "monitoramentos/<int:pk>/editar/",
+        views.monitoramento_editar,
+        name="monitoramento_editar",
+    ),
+    path(
+        "monitoramentos/<int:pk>/excluir/",
+        views.monitoramento_excluir,
+        name="monitoramento_excluir",
+    ),
+    path(
+        "",
+        views.inicio,
+        name="inicio",
+    ),
+    path(
+        "cisternas/",
+        views.cisterna_listar,
+        name="cisterna_listar",
+    ),
+    path(
+        "cisternas/nova/",
+        views.cisterna_criar,
+        name="cisterna_criar",
+    ),
+    path(
+        "cisternas/<int:pk>/",
+        views.cisterna_detalhar,
+        name="cisterna_detalhar",
+    ),
+    path(
+        "cisternas/<int:pk>/editar/",
+        views.cisterna_editar,
+        name="cisterna_editar",
+    ),
+    path(
+        "cisternas/<int:pk>/excluir/",
+        views.cisterna_excluir,
+        name="cisterna_excluir",
+    ),
+    path(
+        "alertas/",
+        views.alerta_listar,
+        name="alerta_listar",
+    ),
+    path(
+        "alertas/novo/",
+        views.alerta_criar,
+        name="alerta_criar",
+    ),
+    path(
+        "alertas/<int:pk>/",
+        views.alerta_detalhar,
+        name="alerta_detalhar",
+    ),
+    path(
+        "alertas/<int:pk>/editar/",
+        views.alerta_editar,
+        name="alerta_editar",
+    ),
+    path(
+        "alertas/<int:pk>/excluir/",
+        views.alerta_excluir,
+        name="alerta_excluir",
+    ),
+    path(
+        "abastecimentos/",
+        views.abastecimento_listar,
+        name="abastecimento_listar",
+    ),
+    path(
+        "abastecimentos/novo/",
+        views.abastecimento_criar,
+        name="abastecimento_criar",
+    ),
+    path(
+        "abastecimentos/<int:pk>/",
+        views.abastecimento_detalhar,
+        name="abastecimento_detalhar",
+    ),
+    path(
+        "abastecimentos/<int:pk>/editar/",
+        views.abastecimento_editar,
+        name="abastecimento_editar",
+    ),
+    path(
+        "abastecimentos/<int:pk>/excluir/",
+        views.abastecimento_excluir,
+        name="abastecimento_excluir",
+    ),
 ]

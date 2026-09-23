@@ -1,0 +1,64 @@
+{% extends "cisternas/base.html" %}
+
+{% block title %}
+    {{ titulo_pagina }} | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel detalhes-painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Monitoramentos</p>
+            <h1>{{ titulo_pagina }}</h1>
+        </div>
+
+        <div class="botoes-acoes">
+            <a class="botao botao-secundario" href="{% url 'monitoramento_listar' %}">
+                Voltar para a listagem
+            </a>
+            <a class="botao botao-primario" href="{% url 'monitoramento_editar' monitoramento.pk %}">
+                Editar monitoramento
+            </a>
+        </div>
+    </div>
+
+    <div class="card-detalhes">
+        <dl class="detalhes-lista">
+            <div class="detalhe-item">
+                <dt>ID</dt>
+                <dd>{{ monitoramento.id }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Usuário</dt>
+                <dd>{{ monitoramento.usuario.nome }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Cisterna</dt>
+                <dd>{{ monitoramento.cisterna.descricao }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Data e hora</dt>
+                <dd>{{ monitoramento.dataHora|date:"d/m/Y H:i" }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Nível da água</dt>
+                <dd>{{ monitoramento.nivelAgua }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Consumo</dt>
+                <dd>{{ monitoramento.consumo }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Situação</dt>
+                <dd>{{ monitoramento.situacao }}</dd>
+            </div>
+        </dl>
+
+        <div class="formulario-acoes">
+            <a class="botao botao-perigo" href="{% url 'monitoramento_excluir' monitoramento.pk %}">
+                Excluir monitoramento
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

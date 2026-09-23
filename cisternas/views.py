@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_GET, require_http_methods
 
 from .forms import (
     AbastecimentoForm,
@@ -12,12 +11,10 @@ from .forms import (
 )
 from .models import Abastecimento, Alerta, Cisterna, Monitoramento, Usuario
 
-@require_GET
 def inicio(request):
     return redirect("cisterna_listar")
 
 
-@require_GET
 def cisterna_listar(request):
     cisternas = Cisterna.objects.select_related("usuario").all()
 
@@ -34,7 +31,6 @@ def cisterna_listar(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def cisterna_criar(request):
     if request.method == "POST":
         form = CisternaForm(request.POST)
@@ -64,7 +60,77 @@ def cisterna_criar(request):
     )
 
 
-@require_GET
+def cisterna_detalhar(request, pk):
+    cisterna = get_object_or_404(
+        Cisterna.objects.select_related("usuario"),
+        pk=pk,
+    )
+
+    contexto = {
+        "titulo_pagina": "Detalhes da cisterna",
+        "cisterna": cisterna,
+    }
+
+    return render(request, "cisternas/cisterna_detalhes.html", contexto)
+
+
+def cisterna_editar(request, pk):
+    cisterna = get_object_or_404(Cisterna, pk=pk)
+
+    if request.method == "POST":
+        form = CisternaForm(request.POST, instance=cisterna)
+
+        if form.is_valid():
+            cisterna = form.save()
+
+            messages.success(
+                request,
+                f"Cisterna {cisterna.id} atualizada com sucesso.",
+            )
+
+            return redirect("cisterna_detalhar", pk=cisterna.pk)
+
+    else:
+        form = CisternaForm(instance=cisterna)
+
+    contexto = {
+        "titulo_pagina": "Editar cisterna",
+        "form": form,
+        "cisterna": cisterna,
+        "modo_edicao": True,
+    }
+
+    return render(request, "cisternas/cisterna_formulario.html", contexto)
+
+
+def cisterna_excluir(request, pk):
+    cisterna = get_object_or_404(Cisterna, pk=pk)
+
+    if request.method == "POST":
+        identificador = cisterna.id
+        cisterna.delete()
+
+        messages.success(
+            request,
+            f"Cisterna {identificador} excluída com sucesso.",
+        )
+
+        return redirect("cisterna_listar")
+
+    contexto = {
+        "titulo_pagina": "Excluir cisterna",
+        "objeto_nome": f"Cisterna {cisterna.id} - {cisterna.descricao}",
+        "aviso_exclusao": (
+            "Os monitoramentos, alertas e abastecimentos relacionados "
+            "também serão excluídos."
+        ),
+        "url_cancelar": "cisterna_detalhar",
+        "objeto_pk": cisterna.pk,
+    }
+
+    return render(request, "cisternas/confirmar_exclusao.html", contexto)
+
+
 def usuario_listar(request):
     usuarios = Usuario.objects.order_by("nome", "username")
 
@@ -81,7 +147,6 @@ def usuario_listar(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def usuario_criar(request):
     if request.method == "POST":
         form = UsuarioForm(request.POST)
@@ -113,7 +178,6 @@ def usuario_criar(request):
 # CRUD de usuários
 
 
-@require_GET
 def usuario_detalhar(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -129,7 +193,6 @@ def usuario_detalhar(request, pk):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def usuario_editar(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -169,7 +232,6 @@ def usuario_editar(request, pk):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def usuario_excluir(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -202,7 +264,6 @@ def usuario_excluir(request, pk):
     )
 
 
-@require_GET
 def monitoramento_listar(request):
     monitoramentos = Monitoramento.objects.select_related(
         "usuario",
@@ -222,7 +283,6 @@ def monitoramento_listar(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def monitoramento_criar(request):
     if request.method == "POST":
         form = MonitoramentoForm(request.POST)
@@ -252,7 +312,73 @@ def monitoramento_criar(request):
     )
 
 
-@require_GET
+def monitoramento_detalhar(request, pk):
+    monitoramento = get_object_or_404(
+        Monitoramento.objects.select_related("usuario", "cisterna"),
+        pk=pk,
+    )
+
+    contexto = {
+        "titulo_pagina": "Detalhes do monitoramento",
+        "monitoramento": monitoramento,
+    }
+
+    return render(request, "monitoramento/detalhes.html", contexto)
+
+
+def monitoramento_editar(request, pk):
+    monitoramento = get_object_or_404(Monitoramento, pk=pk)
+
+    if request.method == "POST":
+        form = MonitoramentoForm(request.POST, instance=monitoramento)
+
+        if form.is_valid():
+            monitoramento = form.save()
+
+            messages.success(
+                request,
+                f"Monitoramento {monitoramento.id} atualizado com sucesso.",
+            )
+
+            return redirect("monitoramento_detalhar", pk=monitoramento.pk)
+
+    else:
+        form = MonitoramentoForm(instance=monitoramento)
+
+    contexto = {
+        "titulo_pagina": "Editar monitoramento",
+        "form": form,
+        "monitoramento": monitoramento,
+        "modo_edicao": True,
+    }
+
+    return render(request, "monitoramento/formulario.html", contexto)
+
+
+def monitoramento_excluir(request, pk):
+    monitoramento = get_object_or_404(Monitoramento, pk=pk)
+
+    if request.method == "POST":
+        identificador = monitoramento.id
+        monitoramento.delete()
+
+        messages.success(
+            request,
+            f"Monitoramento {identificador} excluído com sucesso.",
+        )
+
+        return redirect("monitoramento_listar")
+
+    contexto = {
+        "titulo_pagina": "Excluir monitoramento",
+        "objeto_nome": f"Monitoramento {monitoramento.id}",
+        "url_cancelar": "monitoramento_detalhar",
+        "objeto_pk": monitoramento.pk,
+    }
+
+    return render(request, "cisternas/confirmar_exclusao.html", contexto)
+
+
 def alerta_listar(request):
     alertas = Alerta.objects.select_related(
         "cisterna",
@@ -272,7 +398,6 @@ def alerta_listar(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def alerta_criar(request):
     if request.method == "POST":
         form = AlertaForm(request.POST)
@@ -302,7 +427,6 @@ def alerta_criar(request):
     )
 
 
-@require_GET
 def abastecimento_listar(request):
     abastecimentos = Abastecimento.objects.select_related(
         "usuario",
@@ -322,7 +446,6 @@ def abastecimento_listar(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
 def abastecimento_criar(request):
     if request.method == "POST":
         form = AbastecimentoForm(request.POST)
@@ -355,7 +478,6 @@ def abastecimento_criar(request):
     )
 
 # CRUD de alertas
-@require_GET
 def alerta_detalhar(request, pk):
     alerta = get_object_or_404(
         Alerta.objects.select_related("cisterna", "cisterna__usuario"),
@@ -367,7 +489,6 @@ def alerta_detalhar(request, pk):
     }
     return render(request, "cisternas/alerta/detalhes.html", contexto)
 
-@require_http_methods(["GET", "POST"])
 def alerta_editar(request, pk):
     alerta = get_object_or_404(Alerta, pk=pk)
 
@@ -397,7 +518,6 @@ def alerta_editar(request, pk):
     return render(request, "cisternas/alerta/formulario.html", contexto)
 
 
-@require_http_methods(["GET", "POST"])
 def alerta_excluir(request, pk):
     alerta = get_object_or_404(Alerta, pk=pk)
 
@@ -427,7 +547,6 @@ def alerta_excluir(request, pk):
     )
 
     # CRUD de abastecimentos
-@require_GET
 def abastecimento_detalhar(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento.objects.select_related("usuario", "cisterna"),
@@ -445,7 +564,6 @@ def abastecimento_detalhar(request, pk):
         contexto,
     )
 
-@require_http_methods(["GET", "POST"])
 def abastecimento_editar(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento,
@@ -487,7 +605,6 @@ def abastecimento_editar(request, pk):
         contexto,
     )
 
-@require_http_methods(["GET", "POST"])
 def abastecimento_excluir(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento,

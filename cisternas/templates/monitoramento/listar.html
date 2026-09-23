@@ -49,76 +49,79 @@ Monitoramentos | Sistema de Cisternas
                         <th>Nível da água</th>
                         <th>Consumo</th>
                         <th>Situação</th>
-                    </tr>
-                </thead>
+ <th>Ações</th>
+ </tr>
+ </thead>
 
-                <tbody>
-                    {% for monitoramento in monitoramentos %}
-                        <tr>
+ <tbody>
+ {% for monitoramento in monitoramentos %}
+ <tr>
 
-                            <td>
-                                {{ monitoramento.id }}
-                            </td>
+ <td>
+ {{ monitoramento.id }}
+ </td>
 
-                            <td>
-                                {{ monitoramento.usuario.nome }}
-                            </td>
+ <td>
+ {{ monitoramento.usuario.nome }}
+ </td>
 
-                            <td>
-                                Cisterna {{ monitoramento.cisterna.id }}
-                                - {{ monitoramento.cisterna.descricao }}
-                            </td>
+ <td>
+ Cisterna {{ monitoramento.cisterna.id }}
+ - {{ monitoramento.cisterna.descricao }}
+ </td>
 
-                            <td>
-                                <span class="data-registro">
-                                    {{ monitoramento.dataHora|date:"d/m/Y H:i" }}
-                                </span>
-                            </td>
+ <td>
+ <span class="data-registro">
+ {{ monitoramento.dataHora|date:"d/m/Y H:i" }}
+ </span>
+ </td>
 
-                            <td>
-                                <span class="valor-medida">
-                                    {{ monitoramento.nivelAgua }}
-                                </span>
-                            </td>
+ <td>
+ <span class="valor-medida">
+ {{ monitoramento.nivelAgua }}
+ </span>
+ </td>
 
-                            <td>
-                                <span class="valor-medida">
-                                    {{ monitoramento.consumo }}
-                                </span>
-                            </td>
+ <td>
+ <span class="valor-medida">
+ {{ monitoramento.consumo }}
+ </span>
+ </td>
 
-                            <td>
-                                <span class="situacao-monitoramento">
-                                    {{ monitoramento.situacao }}
-                                </span>
-                            </td>
+ <td>
+ <span class="situacao-monitoramento">
+ {{ monitoramento.situacao }}
+ </span>
+ </td>
 
-                        </tr>
-                    {% endfor %}
-                </tbody>
+ <td>
+ <div class="acoes-tabela">
+ <a class="link-tabela" href="{% url 'monitoramento_detalhar' monitoramento.pk %}">Detalhes</a>
+ <a class="link-tabela" href="{% url 'monitoramento_editar' monitoramento.pk %}">Editar</a>
+ <a class="link-perigo" href="{% url 'monitoramento_excluir' monitoramento.pk %}">Excluir</a>
+ </div>
+ </td>
+ </tr>
+ {% empty %}
+ <tr>
+ <td colspan="8">
+ <div class="estado-vazio">
+ <h2>Nenhum monitoramento cadastrado</h2>
+ <p>
+ Quando houver uma leitura, registre o usuário, a cisterna,
+ a data, o nível de água, o consumo e a situação.
+ </p>
+ <a class="botao botao-primario" href="{% url 'monitoramento_criar' %}">
+ Cadastrar primeiro monitoramento
+ </a>
+ </div>
+ </td>
+ </tr>
+ {% endfor %}
+ </tbody>
 
-            </table>
-        </div>
-
-    {% else %}
-
-        <div class="estado-vazio">
-
-            <h2>Nenhum monitoramento cadastrado</h2>
-
-            <p>
-                Quando houver uma leitura, registre o usuário, a cisterna,
-                a data, o nível de água, o consumo e a situação.
-            </p>
-
-            <a
-                class="botao botao-primario"
-                href="{% url 'monitoramento_criar' %}"
-            >
-                Cadastrar primeiro monitoramento
-            </a>
-
-        </div>
+ </table>
+ </div>
 
     {% endif %}
 

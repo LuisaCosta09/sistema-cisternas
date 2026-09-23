@@ -1,0 +1,64 @@
+{% extends "cisternas/base.html" %}
+
+{% block title %}
+    {{ titulo_pagina }} | Sistema de Cisternas
+{% endblock %}
+
+{% block content %}
+<section class="painel detalhes-painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Cisternas</p>
+            <h1>{{ titulo_pagina }}</h1>
+        </div>
+
+        <div class="botoes-acoes">
+            <a class="botao botao-secundario" href="{% url 'cisterna_listar' %}">
+                Voltar para a listagem
+            </a>
+            <a class="botao botao-primario" href="{% url 'cisterna_editar' cisterna.pk %}">
+                Editar cisterna
+            </a>
+        </div>
+    </div>
+
+    <div class="card-detalhes">
+        <dl class="detalhes-lista">
+            <div class="detalhe-item">
+                <dt>ID</dt>
+                <dd>{{ cisterna.id }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Usuário responsável</dt>
+                <dd>{{ cisterna.usuario.nome }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Latitude</dt>
+                <dd>{{ cisterna.latitude }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Longitude</dt>
+                <dd>{{ cisterna.longitude }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Capacidade</dt>
+                <dd>{{ cisterna.capacidade }} L</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Descrição</dt>
+                <dd>{{ cisterna.descricao }}</dd>
+            </div>
+            <div class="detalhe-item">
+                <dt>Status</dt>
+                <dd>{{ cisterna.status }}</dd>
+            </div>
+        </dl>
+
+        <div class="formulario-acoes">
+            <a class="botao botao-perigo" href="{% url 'cisterna_excluir' cisterna.pk %}">
+                Excluir cisterna
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
