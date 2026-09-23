@@ -6,7 +6,9 @@
 {% block extra_js %}
 <script src="{% static 'cisternas/js/registros.js' %}"></script>
 {% endblock %}
-{% block title %}Cadastrar alerta | Sistema de Cisternas{% endblock %}
+{% block title %}
+    {{ titulo_pagina }} | Sistema de Cisternas
+{% endblock %}
 {% block content %}
 <section class="painel formulario-painel">
     <div class="pagina-topo">
@@ -105,6 +107,11 @@
         <div class="formulario-acoes">
             <button class="botao botao-primario" type="submit">
                 Cadastrar alerta
+            {% if modo_edicao %}
+            Salvar alterações
+            {% else %}
+                Cadastrar alerta
+            {% endif %}
             </button>
             <a class="botao botao-secundario" href="{% url 'alerta_listar' %}">
                 Cancelar

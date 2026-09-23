@@ -1,0 +1,94 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
+{% endblock %}
+
+{% block title %}Abastecimento {{ abastecimento.id }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <p class="pagina-sobre">Abastecimentos</p>
+
+            <h1>{{ titulo_pagina }}</h1>
+
+            <p class="pagina-descricao">
+                Informações completas do abastecimento selecionado.
+            </p>
+        </div>
+
+        <a
+            class="botao botao-secundario"
+            href="{% url 'abastecimento_listar' %}"
+        >
+            Voltar para a listagem
+        </a>
+    </div>
+
+    <div class="grade-detalhes">
+        <div class="detalhe-item">
+            <strong>ID</strong>
+            <span>{{ abastecimento.id }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Usuário</strong>
+            <span>{{ abastecimento.usuario.nome }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Cisterna</strong>
+            <span>
+                Cisterna {{ abastecimento.cisterna.id }} -
+                {{ abastecimento.cisterna.descricao }}
+            </span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Data e hora</strong>
+            <span>
+                {{ abastecimento.dataHora|date:"d/m/Y H:i" }}
+            </span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Quantidade de água</strong>
+            <span>{{ abastecimento.quantidadeAgua }} L</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Tipo</strong>
+            <span>{{ abastecimento.tipo }}</span>
+        </div>
+
+        <div class="detalhe-item">
+            <strong>Status</strong>
+            <span>{{ abastecimento.status }}</span>
+        </div>
+
+        <div class="detalhe-item detalhe-largo">
+            <strong>Observação</strong>
+            <span>{{ abastecimento.observacao }}</span>
+        </div>
+    </div>
+
+    <div class="formulario-acoes">
+        <a
+            class="botao botao-primario"
+            href="{% url 'abastecimento_editar' abastecimento.pk %}"
+        >
+            Editar abastecimento
+        </a>
+
+        <a
+            class="botao botao-perigo"
+            href="{% url 'abastecimento_excluir' abastecimento.pk %}"
+        >
+            Excluir abastecimento
+        </a>
+    </div>
+</section>
+{% endblock %}
