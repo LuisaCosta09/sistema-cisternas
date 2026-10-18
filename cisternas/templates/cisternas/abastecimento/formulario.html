@@ -1,15 +1,14 @@
+{% extends "cisternas/base.html" %}
+{% load static %}
 {% block title %}
     {{ titulo_pagina }} | Sistema de Cisternas
 {% endblock %}
-{% extends "cisternas/base.html" %}
-{% load static %}
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'cisternas/css/alerta_abastecimento.css' %}">
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'cisternas/js/registros.js' %}"></script>
 {% endblock %}
-{% block title %}Cadastrar abastecimento | Sistema de Cisternas{% endblock %}
 {% block content %}
 <section class="painel formulario-painel">
     <div class="pagina-topo">
@@ -132,7 +131,11 @@
         </div>
         <div class="formulario-acoes">
             <button class="botao botao-primario" type="submit">
-                Cadastrar abastecimento
+                {% if modo_edicao %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar abastecimento
+                {% endif %}
             </button>
             <a class="botao botao-secundario" href="{% url 'abastecimento_listar' %}">
                 Cancelar
