@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block title %}
-Cadastrar monitoramento | Sistema de Cisternas
+{{ titulo_pagina }} | Sistema de Cisternas
 {% endblock %}
 
 {% block content %}
@@ -184,7 +184,11 @@ Cadastrar monitoramento | Sistema de Cisternas
                 class="botao botao-primario"
                 type="submit"
             >
-                Cadastrar monitoramento
+                {% if modo_edicao %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar monitoramento
+                {% endif %}
             </button>
 
             <a

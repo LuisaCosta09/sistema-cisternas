@@ -30,8 +30,7 @@
             <strong>Sobre este cadastro</strong>
             <p>
                 O alerta será associado somente à cisterna selecionada.
-                Nesta etapa o sistema registra e lista o alerta; edição e exclusão
-                não fazem parte desta entrega.
+                O alerta será mantido no histórico da cisterna selecionada.
             </p>
         </div>
         {% if form.non_field_errors %}
@@ -106,12 +105,11 @@
         </div>
         <div class="formulario-acoes">
             <button class="botao botao-primario" type="submit">
-                Cadastrar alerta
-            {% if modo_edicao %}
-            Salvar alterações
-            {% else %}
-                Cadastrar alerta
-            {% endif %}
+                {% if modo_edicao %}
+                    Salvar alterações
+                {% else %}
+                    Cadastrar alerta
+                {% endif %}
             </button>
             <a class="botao botao-secundario" href="{% url 'alerta_listar' %}">
                 Cancelar

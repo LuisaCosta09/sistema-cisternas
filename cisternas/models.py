@@ -56,6 +56,28 @@ class Cisterna(models.Model):
     class Meta:
         ordering = ("id",)
 
+    def clean(self):
+        super().clean()
+
+        responsavel_alterado = (
+            self.pk
+            and type(self).objects.filter(pk=self.pk)
+            .exclude(usuario_id=self.usuario_id)
+            .exists()
+        )
+
+        if responsavel_alterado and (
+            self.monitoramentos.exists() or self.abastecimentos.exists()
+        ):
+            raise ValidationError(
+                {
+                    "usuario": (
+                        "Não é possível alterar o responsável enquanto "
+                        "a cisterna possuir monitoramentos ou abastecimentos."
+                    )
+                }
+            )
+
     def __str__(self):
         return f"Cisterna {self.id} - {self.usuario.nome}"
 

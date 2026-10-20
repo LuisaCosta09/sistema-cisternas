@@ -250,8 +250,9 @@ def usuario_excluir(request, pk):
         "titulo_pagina": "Excluir usuário",
         "objeto_nome": usuario.nome,
         "aviso_exclusao": (
-            "As cisternas e os monitoramentos pertencentes e "
-            "relacionados também serão excluídos."
+            "As cisternas, os monitoramentos e os abastecimentos "
+            "vinculados a este usuário serão excluídos. Os alertas "
+            "associados às cisternas também serão excluídos."
         ),
         "url_cancelar": "usuario_detalhar",
         "objeto_pk": usuario.pk,
