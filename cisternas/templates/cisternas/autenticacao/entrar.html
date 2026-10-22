@@ -1,0 +1,41 @@
+
+{% extends "cisternas/base.html" %}
+
+{% block title %}Entrar | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<section class="painel">
+    <div class="pagina-topo">
+        <div>
+            <h1>Entrar no sistema</h1>
+            <p>Informe seu nome de usuário e sua senha.</p>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'entrar' %}">
+        {% csrf_token %}
+
+        {% if proximo %}
+            <input type="hidden" name="next" value="{{ proximo }}">
+        {% endif %}
+
+        {{ form.non_field_errors }}
+
+        <p>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {{ form.username.errors }}
+        </p>
+
+        <p>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            {{ form.password.errors }}
+        </p>
+
+        <button class="botao botao-primario" type="submit">
+            Entrar
+        </button>
+    </form>
+</section>
+{% endblock %}

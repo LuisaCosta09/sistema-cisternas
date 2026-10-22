@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -41,6 +42,15 @@
                 <a href="{% url 'abastecimento_listar' %}">
                     Abastecimentos
                 </a>
+
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'sair' %}">
+                        {% csrf_token %}
+                        <button class="botao" type="submit">Sair</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'entrar' %}">Entrar</a>
+                {% endif %}
             </nav>
         </div>
     </header>
