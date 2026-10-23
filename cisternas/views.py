@@ -1,6 +1,10 @@
+from functools import wraps
+
+from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 from .forms import (
     AbastecimentoForm,
@@ -11,6 +15,23 @@ from .forms import (
     UsuarioForm,
 )
 from .models import Abastecimento, Alerta, Cisterna, Monitoramento, Usuario
+
+def administrador_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_active or not request.user.is_staff:
+            raise PermissionDenied
+
+        return view_func(request, *args, **kwargs)
+
+    return _wrapped_view
+
+
+def _usuarios_visiveis_para(request):
+    usuarios = Usuario.objects.all()
+    if not request.user.is_staff:
+        usuarios = usuarios.filter(pk=request.user.pk)
+    return usuarios
 
 @login_required
 def inicio(request):
@@ -134,7 +155,7 @@ def cisterna_excluir(request, pk):
 
 @login_required
 def usuario_listar(request):
-    usuarios = Usuario.objects.order_by("nome", "username")
+    usuarios = _usuarios_visiveis_para(request).order_by("nome", "username")
 
     contexto = {
         "titulo_pagina": "Usuários cadastrados",
@@ -149,6 +170,7 @@ def usuario_listar(request):
     )
 
 @login_required
+@administrador_required
 def usuario_criar(request):
     if request.method == "POST":
         form = UsuarioForm(request.POST)
@@ -181,7 +203,7 @@ def usuario_criar(request):
 
 @login_required
 def usuario_detalhar(request, pk):
-    usuario = get_object_or_404(Usuario, pk=pk)
+    usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
 
     contexto = {
         "titulo_pagina": "Detalhes do usuário",
@@ -196,7 +218,7 @@ def usuario_detalhar(request, pk):
 
 @login_required
 def usuario_editar(request, pk):
-    usuario = get_object_or_404(Usuario, pk=pk)
+    usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
 
     if request.method == "POST":
         form = UsuarioAtualizacaoForm(
@@ -235,11 +257,34 @@ def usuario_editar(request, pk):
 
 @login_required
 def usuario_excluir(request, pk):
-    usuario = get_object_or_404(Usuario, pk=pk)
+    usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
+    excluindo_propria_conta = usuario.pk == request.user.pk
 
     if request.method == "POST":
+        cisternas_do_usuario = Cisterna.objects.filter(usuario=usuario)
+        possui_registro_de_terceiro = (
+            Monitoramento.objects.filter(cisterna__in=cisternas_do_usuario)
+            .exclude(usuario=usuario)
+            .exists()
+            or Abastecimento.objects.filter(cisterna__in=cisternas_do_usuario)
+            .exclude(usuario=usuario)
+            .exists()
+        )
+
+        if possui_registro_de_terceiro:
+            messages.error(
+                request,
+                "A conta não pode ser excluída porque há monitoramentos ou "
+                "abastecimentos de outros usuários vinculados às suas cisternas.",
+            )
+            return redirect("usuario_detalhar", pk=usuario.pk)
+
         nome = usuario.nome
         usuario.delete()
+
+        if excluindo_propria_conta:
+            logout(request)
+            return redirect("entrar")
 
         messages.success(
             request,
@@ -250,11 +295,23 @@ def usuario_excluir(request, pk):
 
     contexto = {
         "titulo_pagina": "Excluir usuário",
-        "objeto_nome": usuario.nome,
+        "objeto_nome": "sua conta" if excluindo_propria_conta else usuario.nome,
+        "mensagem_confirmacao": (
+            "Tem certeza de que deseja excluir sua conta? Se você continuar, "
+            "todos os dados vinculados a esse usuário, incluindo os cadastros "
+            "de cisternas, monitoramentos e alertas, também serão excluídos. "
+            "Essa ação não poderá ser desfeita. Deseja realmente continuar?"
+            if excluindo_propria_conta
+            else ""
+        ),
         "aviso_exclusao": (
-            "As cisternas, os monitoramentos e os abastecimentos "
-            "vinculados a este usuário serão excluídos. Os alertas "
-            "associados às cisternas também serão excluídos."
+            "Os abastecimentos vinculados às cisternas também serão excluídos."
+            if excluindo_propria_conta
+            else (
+                "As cisternas, os monitoramentos e os abastecimentos "
+                "vinculados ao usuário serão excluídos. Os alertas "
+                "associados às cisternas também serão excluídos."
+            )
         ),
         "url_cancelar": "usuario_detalhar",
         "objeto_pk": usuario.pk,

@@ -64,6 +64,8 @@ class RotasProtegidasTests(TestCase):
                         resposta,
                         reverse("cisterna_listar"),
                     )
+                elif nome == "usuario_criar":
+                    self.assertEqual(resposta.status_code, 403)
                 else:
                     self.assertEqual(resposta.status_code, 200)
 

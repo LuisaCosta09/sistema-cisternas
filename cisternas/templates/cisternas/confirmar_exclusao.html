@@ -10,16 +10,22 @@
 
     <h1>{{ titulo_pagina }}</h1>
 
-    <p>
-        Tem certeza de que deseja excluir
-        <strong>{{ objeto_nome }}</strong>?
-    </p>
+    {% if mensagem_confirmacao %}
+        <p>{{ mensagem_confirmacao }}</p>
+    {% else %}
+        <p>
+            Tem certeza de que deseja excluir
+            <strong>{{ objeto_nome }}</strong>?
+        </p>
+    {% endif %}
 
     {% if aviso_exclusao %}
         <p class="aviso-exclusao">{{ aviso_exclusao }}</p>
     {% endif %}
 
-    <p>Essa ação não poderá ser desfeita.</p>
+    {% if not mensagem_confirmacao %}
+        <p>Essa ação não poderá ser desfeita.</p>
+    {% endif %}
 
     <form method="post" class="formulario-acoes">
         {% csrf_token %}

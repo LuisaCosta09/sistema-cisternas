@@ -1,8 +1,10 @@
 from decimal import Decimal
+from types import SimpleNamespace
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
 
@@ -44,6 +46,10 @@ class CisternaMonitoramentoCrudTests(TestCase):
         response = self.client.get(reverse("cisterna_listar"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Cisternas cadastradas")
+        self.assertContains(
+            response,
+            "https://www.google.com/maps/search/?api=1&amp;query=-12.3456789,-45.6789012",
+        )
 
         response = self.client.get(reverse("cisterna_criar"))
         self.assertEqual(response.status_code, 200)
@@ -98,6 +104,30 @@ class CisternaMonitoramentoCrudTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Cisterna.objects.filter(pk=cisterna.pk).exists())
+
+    def test_cisterna_sem_coordenadas_nao_exibe_link_de_mapa(self):
+        cisterna_sem_coordenadas = SimpleNamespace(
+            id=999,
+            usuario=SimpleNamespace(nome="Usuário teste"),
+            latitude=None,
+            longitude=None,
+            capacidade=Decimal("100.00"),
+            descricao="Localização não informada",
+            status="Ativa",
+            pk=999,
+        )
+
+        html = render_to_string(
+            "cisternas/cisterna_listar.html",
+            {
+                "titulo_pagina": "Cisternas cadastradas",
+                "quantidade_cisternas": 1,
+                "cisternas": [cisterna_sem_coordenadas],
+            },
+        )
+
+        self.assertIn("Localização indisponível", html)
+        self.assertNotIn("google.com/maps", html)
 
     def test_cisterna_permite_trocar_responsavel_sem_registros_dependentes(self):
         self.monitoramento.delete()
@@ -260,6 +290,9 @@ class CisternaMonitoramentoCrudTests(TestCase):
         self.assertContains(response, "Nenhum monitoramento cadastrado")
 
     def test_usuario_crud_completo(self):
+        self.usuario.is_staff = True
+        self.usuario.save(update_fields=("is_staff",))
+
         response = self.client.get(reverse("usuario_listar"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Usuários cadastrados")
@@ -439,6 +472,9 @@ class CisternaMonitoramentoCrudTests(TestCase):
         )
 
     def test_exclusao_de_usuario_remove_todos_os_dependentes_em_cascata(self):
+        self.usuario.is_staff = True
+        self.usuario.save(update_fields=("is_staff",))
+
         alerta = Alerta.objects.create(
             cisterna=self.cisterna,
             tipo="Nível baixo",

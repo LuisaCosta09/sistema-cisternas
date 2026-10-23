@@ -1,4 +1,5 @@
 {% extends "cisternas/base.html" %}
+{% load l10n %}
 {% block title %}Cisternas | Sistema de Cisternas{% endblock %}
 {% block content %}
 <section class="painel">
@@ -45,14 +46,18 @@
  </span>
  </td>
  <td>
+ {% if cisterna.latitude is not None and cisterna.longitude is not None %}
  <a
  class="link-tabela"
- href="https://www.openstreetmap.org/?mlat={{ cisterna.latitude }}&mlon={{ cisterna.longitude }}#map=17/{{ cisterna.latitude }}/{{ cisterna.longitude }}"
+ href="https://www.google.com/maps/search/?api=1&amp;query={{ cisterna.latitude|unlocalize }},{{ cisterna.longitude|unlocalize }}"
  target="_blank"
  rel="noopener noreferrer"
  >
  Ver no mapa
  </a>
+ {% else %}
+ <span>Localização indisponível</span>
+ {% endif %}
  </td>
  <td>
  <div class="acoes-tabela">
