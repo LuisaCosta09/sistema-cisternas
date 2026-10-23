@@ -77,7 +77,7 @@ class AutenticacaoIntegracaoTests(TestCase):
 
         resposta = cliente.post(
             reverse("sair"),
-            HTTP_X_CSRFTOKEN=csrf_token,
+            {"csrfmiddlewaretoken": csrf_token},
         )
 
         self.assertRedirects(resposta, reverse("entrar"))
