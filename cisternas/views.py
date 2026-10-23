@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
 
 from .forms import (
     AbastecimentoForm,
@@ -11,10 +12,11 @@ from .forms import (
 )
 from .models import Abastecimento, Alerta, Cisterna, Monitoramento, Usuario
 
+@login_required
 def inicio(request):
     return redirect("cisterna_listar")
 
-
+@login_required
 def cisterna_listar(request):
     cisternas = Cisterna.objects.select_related("usuario").all()
 
@@ -30,7 +32,7 @@ def cisterna_listar(request):
         contexto,
     )
 
-
+@login_required
 def cisterna_criar(request):
     if request.method == "POST":
         form = CisternaForm(request.POST)
@@ -59,7 +61,7 @@ def cisterna_criar(request):
         contexto,
     )
 
-
+@login_required
 def cisterna_detalhar(request, pk):
     cisterna = get_object_or_404(
         Cisterna.objects.select_related("usuario"),
@@ -73,7 +75,7 @@ def cisterna_detalhar(request, pk):
 
     return render(request, "cisternas/cisterna_detalhes.html", contexto)
 
-
+@login_required
 def cisterna_editar(request, pk):
     cisterna = get_object_or_404(Cisterna, pk=pk)
 
@@ -102,7 +104,7 @@ def cisterna_editar(request, pk):
 
     return render(request, "cisternas/cisterna_formulario.html", contexto)
 
-
+@login_required
 def cisterna_excluir(request, pk):
     cisterna = get_object_or_404(Cisterna, pk=pk)
 
@@ -130,7 +132,7 @@ def cisterna_excluir(request, pk):
 
     return render(request, "cisternas/confirmar_exclusao.html", contexto)
 
-
+@login_required
 def usuario_listar(request):
     usuarios = Usuario.objects.order_by("nome", "username")
 
@@ -146,7 +148,7 @@ def usuario_listar(request):
         contexto,
     )
 
-
+@login_required
 def usuario_criar(request):
     if request.method == "POST":
         form = UsuarioForm(request.POST)
@@ -177,7 +179,7 @@ def usuario_criar(request):
 
 # CRUD de usuários
 
-
+@login_required
 def usuario_detalhar(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -192,7 +194,7 @@ def usuario_detalhar(request, pk):
         contexto,
     )
 
-
+@login_required
 def usuario_editar(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -231,7 +233,7 @@ def usuario_editar(request, pk):
         contexto,
     )
 
-
+@login_required
 def usuario_excluir(request, pk):
     usuario = get_object_or_404(Usuario, pk=pk)
 
@@ -264,7 +266,7 @@ def usuario_excluir(request, pk):
         contexto,
     )
 
-
+@login_required
 def monitoramento_listar(request):
     monitoramentos = Monitoramento.objects.select_related(
         "usuario",
@@ -283,7 +285,7 @@ def monitoramento_listar(request):
         contexto,
     )
 
-
+@login_required
 def monitoramento_criar(request):
     if request.method == "POST":
         form = MonitoramentoForm(request.POST)
@@ -312,7 +314,7 @@ def monitoramento_criar(request):
         contexto,
     )
 
-
+@login_required
 def monitoramento_detalhar(request, pk):
     monitoramento = get_object_or_404(
         Monitoramento.objects.select_related("usuario", "cisterna"),
@@ -326,7 +328,7 @@ def monitoramento_detalhar(request, pk):
 
     return render(request, "monitoramento/detalhes.html", contexto)
 
-
+@login_required
 def monitoramento_editar(request, pk):
     monitoramento = get_object_or_404(Monitoramento, pk=pk)
 
@@ -355,7 +357,7 @@ def monitoramento_editar(request, pk):
 
     return render(request, "monitoramento/formulario.html", contexto)
 
-
+@login_required
 def monitoramento_excluir(request, pk):
     monitoramento = get_object_or_404(Monitoramento, pk=pk)
 
@@ -379,7 +381,7 @@ def monitoramento_excluir(request, pk):
 
     return render(request, "cisternas/confirmar_exclusao.html", contexto)
 
-
+@login_required
 def alerta_listar(request):
     alertas = Alerta.objects.select_related(
         "cisterna",
@@ -398,7 +400,7 @@ def alerta_listar(request):
         contexto,
     )
 
-
+@login_required
 def alerta_criar(request):
     if request.method == "POST":
         form = AlertaForm(request.POST)
@@ -427,7 +429,7 @@ def alerta_criar(request):
         contexto,
     )
 
-
+@login_required
 def abastecimento_listar(request):
     abastecimentos = Abastecimento.objects.select_related(
         "usuario",
@@ -446,7 +448,7 @@ def abastecimento_listar(request):
         contexto,
     )
 
-
+@login_required
 def abastecimento_criar(request):
     if request.method == "POST":
         form = AbastecimentoForm(request.POST)
@@ -479,6 +481,7 @@ def abastecimento_criar(request):
     )
 
 # CRUD de alertas
+@login_required
 def alerta_detalhar(request, pk):
     alerta = get_object_or_404(
         Alerta.objects.select_related("cisterna", "cisterna__usuario"),
@@ -490,6 +493,7 @@ def alerta_detalhar(request, pk):
     }
     return render(request, "cisternas/alerta/detalhes.html", contexto)
 
+@login_required
 def alerta_editar(request, pk):
     alerta = get_object_or_404(Alerta, pk=pk)
 
@@ -518,7 +522,7 @@ def alerta_editar(request, pk):
 
     return render(request, "cisternas/alerta/formulario.html", contexto)
 
-
+@login_required
 def alerta_excluir(request, pk):
     alerta = get_object_or_404(Alerta, pk=pk)
 
@@ -548,6 +552,7 @@ def alerta_excluir(request, pk):
     )
 
     # CRUD de abastecimentos
+@login_required
 def abastecimento_detalhar(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento.objects.select_related("usuario", "cisterna"),
@@ -565,6 +570,7 @@ def abastecimento_detalhar(request, pk):
         contexto,
     )
 
+@login_required
 def abastecimento_editar(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento,
@@ -606,6 +612,7 @@ def abastecimento_editar(request, pk):
         contexto,
     )
 
+@login_required
 def abastecimento_excluir(request, pk):
     abastecimento = get_object_or_404(
         Abastecimento,

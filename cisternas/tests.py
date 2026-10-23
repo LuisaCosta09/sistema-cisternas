@@ -20,6 +20,8 @@ class CisternaMonitoramentoCrudTests(TestCase):
             cpf="12345678909",
         )
 
+        self.client.force_login(self.usuario)
+
         self.cisterna = Cisterna.objects.create(
             usuario=self.usuario,
             latitude=Decimal("-12.3456789"),
