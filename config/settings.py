@@ -135,3 +135,10 @@ MAILERS = {
 LOGIN_URL = "/entrar/"
 LOGIN_REDIRECT_URL = "/cisternas/"
 LOGOUT_REDIRECT_URL = "/entrar/"
+
+from django.contrib.messages import constants as message_constants
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: "secondary",
+    message_constants.ERROR: "danger",
+}

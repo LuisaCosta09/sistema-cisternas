@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class MonitoramentosConfig(AppConfig):
-    name = 'monitoramentos'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "monitoramentos"

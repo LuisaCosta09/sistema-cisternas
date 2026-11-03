@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
 
-# Create your views here.
+
+def pagina_inicial(request):
+    return render(request, "core/landing.html")
+
+
+@login_required
+def inicio(request):
+    return redirect("cisterna_listar")
