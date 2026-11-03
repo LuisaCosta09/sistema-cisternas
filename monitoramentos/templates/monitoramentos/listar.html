@@ -1,0 +1,71 @@
+{% extends "core/base.html" %}
+
+{% block title %}Monitoramentos | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Monitoramentos</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">
+            Total de monitoramentos registrados: {{ quantidade_monitoramentos }}.
+        </p>
+    </div>
+    <a class="btn btn-info" href="{% url 'monitoramento_criar' %}">Cadastrar monitoramento</a>
+</div>
+
+{% if monitoramentos %}
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuário</th>
+                    <th>Cisterna</th>
+                    <th>Data e hora</th>
+                    <th>Nível da água</th>
+                    <th>Consumo</th>
+                    <th>Situação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for monitoramento in monitoramentos %}
+                <tr>
+                    <td>{{ monitoramento.id }}</td>
+                    <td>{{ monitoramento.usuario.nome }}</td>
+                    <td>
+                        <strong>Cisterna {{ monitoramento.cisterna.id }}</strong><br>
+                        <small class="text-body-secondary">{{ monitoramento.cisterna.descricao }}</small>
+                    </td>
+                    <td class="text-nowrap">{{ monitoramento.dataHora|date:"d/m/Y H:i" }}</td>
+                    <td class="text-nowrap">{{ monitoramento.nivelAgua }}</td>
+                    <td class="text-nowrap">{{ monitoramento.consumo }}</td>
+                    <td><span class="badge text-bg-secondary">{{ monitoramento.situacao }}</span></td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-sm btn-outline-neutro" href="{% url 'monitoramento_detalhar' monitoramento.pk %}">Detalhes</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'monitoramento_editar' monitoramento.pk %}">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'monitoramento_excluir' monitoramento.pk %}">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="card text-center">
+    <div class="card-body py-5">
+        <h2 class="h4">Nenhum monitoramento cadastrado</h2>
+        <p class="text-body-secondary mx-auto" style="max-width: 560px;">
+            Quando houver uma leitura, registre o usuário, a cisterna,
+            a data, o nível de água, o consumo e a situação.
+        </p>
+        <a class="btn btn-info" href="{% url 'monitoramento_criar' %}">Cadastrar primeiro monitoramento</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

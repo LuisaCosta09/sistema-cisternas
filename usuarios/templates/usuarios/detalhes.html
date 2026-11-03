@@ -1,0 +1,84 @@
+{% extends "core/base.html" %}
+
+{% block title %}Usuário {{ usuario.nome }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Usuário</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">Informações completas do usuário selecionado.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        {% if request.user.is_staff %}
+            <a class="btn btn-outline-secondary" href="{% url 'usuario_listar' %}">Voltar para a listagem</a>
+        {% endif %}
+        <a class="btn btn-info" href="{% url 'usuario_editar' usuario.pk %}">Editar usuário</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-4">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-body-secondary">ID</dt>
+            <dd class="col-sm-8">{{ usuario.id }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Nome de usuário</dt>
+            <dd class="col-sm-8">{{ usuario.username }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Nome completo</dt>
+            <dd class="col-sm-8">{{ usuario.nome }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">E-mail</dt>
+            <dd class="col-sm-8">{{ usuario.email }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">CPF</dt>
+            <dd class="col-sm-8">{{ usuario.cpf }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Data de cadastro</dt>
+            <dd class="col-sm-8">{{ usuario.date_joined|date:"d/m/Y H:i" }}</dd>
+        </dl>
+
+        <hr class="my-4">
+
+        <a class="btn btn-outline-danger" href="{% url 'usuario_excluir' usuario.pk %}">Excluir usuário</a>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-body p-4">
+        <h2 class="h5 mb-3">Cisternas deste usuário</h2>
+
+        {% if cisternas %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descrição</th>
+                        <th>Capacidade</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cisterna in cisternas %}
+                    <tr>
+                        <td>{{ cisterna.id }}</td>
+                        <td>{{ cisterna.descricao }}</td>
+                        <td>{{ cisterna.capacidade }} L</td>
+                        <td><span class="badge text-bg-secondary">{{ cisterna.status }}</span></td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-neutro" href="{% url 'cisterna_detalhar' cisterna.pk %}">Detalhes</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p class="text-body-secondary mb-0">Nenhuma cisterna cadastrada para este usuário.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

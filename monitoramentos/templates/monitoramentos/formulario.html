@@ -1,0 +1,85 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ titulo_pagina }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 880px;">
+    <div class="card-body p-4">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+            <div>
+                <p class="text-body-secondary text-uppercase small fw-bold mb-1">Monitoramentos</p>
+                <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+                <p class="text-body-secondary mb-0">
+                    Registre uma leitura de monitoramento e relacione-a ao usuário
+                    e à cisterna correspondentes.
+                </p>
+            </div>
+            <a class="btn btn-outline-secondary" href="{% url 'monitoramento_listar' %}">Voltar para a listagem</a>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p class="mb-0">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.usuario.id_for_label }}">{{ form.usuario.label }}</label>
+                    {{ form.usuario }}
+                    {% if form.usuario.help_text %}<div class="form-text">{{ form.usuario.help_text }}</div>{% endif %}
+                    {% for error in form.usuario.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.cisterna.id_for_label }}">{{ form.cisterna.label }}</label>
+                    {{ form.cisterna }}
+                    {% if form.cisterna.help_text %}<div class="form-text">{{ form.cisterna.help_text }}</div>{% endif %}
+                    {% for error in form.cisterna.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.dataHora.id_for_label }}">{{ form.dataHora.label }}</label>
+                {{ form.dataHora }}
+                {% if form.dataHora.help_text %}<div class="form-text">{{ form.dataHora.help_text }}</div>{% endif %}
+                {% for error in form.dataHora.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.nivelAgua.id_for_label }}">{{ form.nivelAgua.label }}</label>
+                    {{ form.nivelAgua }}
+                    {% if form.nivelAgua.help_text %}<div class="form-text">{{ form.nivelAgua.help_text }}</div>{% endif %}
+                    {% for error in form.nivelAgua.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.consumo.id_for_label }}">{{ form.consumo.label }}</label>
+                    {{ form.consumo }}
+                    {% if form.consumo.help_text %}<div class="form-text">{{ form.consumo.help_text }}</div>{% endif %}
+                    {% for error in form.consumo.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label" for="{{ form.situacao.id_for_label }}">{{ form.situacao.label }}</label>
+                {{ form.situacao }}
+                {% if form.situacao.help_text %}<div class="form-text">{{ form.situacao.help_text }}</div>{% endif %}
+                {% for error in form.situacao.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-info" type="submit">
+                    {% if modo_edicao %}Salvar alterações{% else %}Cadastrar monitoramento{% endif %}
+                </button>
+                <a class="btn btn-outline-secondary" href="{% url 'monitoramento_listar' %}">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
