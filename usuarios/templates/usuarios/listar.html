@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+
+{% block title %}Usuários | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Usuários</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">
+            Total de usuários cadastrados: {{ quantidade_usuarios }}.
+        </p>
+    </div>
+
+    {% if request.user.is_staff %}
+        <a class="btn btn-info" href="{% url 'usuario_criar' %}">Cadastrar usuário</a>
+    {% endif %}
+</div>
+
+{% if usuarios %}
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome de usuário</th>
+                    <th>Nome completo</th>
+                    <th>E-mail</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.id }}</td>
+                    <td class="font-monospace">{{ usuario.username }}</td>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td class="font-monospace">{{ usuario.cpf }}</td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-sm btn-outline-neutro" href="{% url 'usuario_detalhar' usuario.pk %}">Detalhes</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'usuario_editar' usuario.pk %}">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'usuario_excluir' usuario.pk %}">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="card text-center">
+    <div class="card-body py-5">
+        <h2 class="h4">Nenhum usuário cadastrado</h2>
+        <p class="text-body-secondary mx-auto" style="max-width: 560px;">
+            Cadastre um usuário antes de relacioná-lo a uma cisterna,
+            monitoramento ou abastecimento.
+        </p>
+        {% if request.user.is_staff %}
+            <a class="btn btn-info" href="{% url 'usuario_criar' %}">Cadastrar primeiro usuário</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

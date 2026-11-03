@@ -1,0 +1,94 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'usuarios/js/usuario.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{ titulo_pagina }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="card mx-auto" style="max-width: 880px;">
+    <div class="card-body p-4">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+            <div>
+                <p class="text-body-secondary text-uppercase small fw-bold mb-1">Usuários</p>
+                <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+                <p class="text-body-secondary mb-0">
+                    Crie o usuário que será relacionado às cisternas,
+                    monitoramentos e abastecimentos do sistema.
+                </p>
+            </div>
+            {% if request.user.is_staff %}
+                 <a class="btn btn-outline-secondary" href="{% url 'usuario_listar' %}">Voltar para a listagem</a>
+            {% endif %}
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p class="mb-0">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+                {% if form.username.help_text %}<div class="form-text">{{ form.username.help_text }}</div>{% endif %}
+                {% for error in form.username.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
+                {{ form.nome }}
+                {% if form.nome.help_text %}<div class="form-text">{{ form.nome.help_text }}</div>{% endif %}
+                {% for error in form.nome.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {% if form.email.help_text %}<div class="form-text">{{ form.email.help_text }}</div>{% endif %}
+                    {% for error in form.email.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.cpf.id_for_label }}">{{ form.cpf.label }}</label>
+                    {{ form.cpf }}
+                    {% if form.cpf.help_text %}<div class="form-text">{{ form.cpf.help_text }}</div>{% endif %}
+                    {% for error in form.cpf.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+            </div>
+
+            {% if not modo_edicao %}
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                    {{ form.password1 }}
+                    {% if form.password1.help_text %}<div class="form-text">{{ form.password1.help_text }}</div>{% endif %}
+                    {% for error in form.password1.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                    {{ form.password2 }}
+                    {% if form.password2.help_text %}<div class="form-text">{{ form.password2.help_text }}</div>{% endif %}
+                    {% for error in form.password2.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <button class="btn btn-info" type="submit">
+                    {% if modo_edicao %}Salvar alterações{% else %}Cadastrar usuário{% endif %}
+                </button>
+                <a class="btn btn-outline-secondary" href="{% if request.user.is_staff %}{% url 'usuario_listar' %}{% else %}{% url 'usuario_detalhar' usuario.pk %}{% endif %}">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
