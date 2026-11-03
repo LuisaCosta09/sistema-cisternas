@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+
+{% block title %}Alerta {{ alerta.id }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Alertas</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">Informações completas do alerta selecionado.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'alerta_listar' %}">Voltar para a listagem</a>
+        <a class="btn btn-info" href="{% url 'alerta_editar' alerta.pk %}">Editar alerta</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-4">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-body-secondary">ID</dt>
+            <dd class="col-sm-8">{{ alerta.id }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Cisterna</dt>
+            <dd class="col-sm-8">Cisterna {{ alerta.cisterna.id }} - {{ alerta.cisterna.descricao }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Responsável</dt>
+            <dd class="col-sm-8">{{ alerta.cisterna.usuario.nome }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Tipo</dt>
+            <dd class="col-sm-8">{% include "alertas/partials/tipo_badge.html" %}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Status</dt>
+            <dd class="col-sm-8">{{ alerta.status }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Data e hora</dt>
+            <dd class="col-sm-8">{{ alerta.dataHora|date:"d/m/Y H:i" }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Mensagem</dt>
+            <dd class="col-sm-8">{{ alerta.mensagem }}</dd>
+        </dl>
+
+        <hr class="my-4">
+
+        <a class="btn btn-outline-danger" href="{% url 'alerta_excluir' alerta.pk %}">Excluir alerta</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% block title %}Abastecimento {{ abastecimento.id }} | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Abastecimentos</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">Informações completas do abastecimento selecionado.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-outline-secondary" href="{% url 'abastecimento_listar' %}">Voltar para a listagem</a>
+        <a class="btn btn-info" href="{% url 'abastecimento_editar' abastecimento.pk %}">Editar abastecimento</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-4">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-body-secondary">ID</dt>
+            <dd class="col-sm-8">{{ abastecimento.id }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Usuário</dt>
+            <dd class="col-sm-8">{{ abastecimento.usuario.nome }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Cisterna</dt>
+            <dd class="col-sm-8">Cisterna {{ abastecimento.cisterna.id }} - {{ abastecimento.cisterna.descricao }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Data e hora</dt>
+            <dd class="col-sm-8">{{ abastecimento.dataHora|date:"d/m/Y H:i" }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Quantidade de água</dt>
+            <dd class="col-sm-8">{{ abastecimento.quantidadeAgua }} L</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Tipo</dt>
+            <dd class="col-sm-8">{{ abastecimento.tipo }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Status</dt>
+            <dd class="col-sm-8">{{ abastecimento.status }}</dd>
+
+            <dt class="col-sm-4 text-body-secondary">Observação</dt>
+            <dd class="col-sm-8">{{ abastecimento.observacao }}</dd>
+        </dl>
+
+        <hr class="my-4">
+
+        <a class="btn btn-outline-danger" href="{% url 'abastecimento_excluir' abastecimento.pk %}">Excluir abastecimento</a>
+    </div>
+</div>
+{% endblock %}
