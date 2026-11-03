@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+
+{% block title %}Entrar | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width: 440px;">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-1">Entrar no sistema</h1>
+            <p class="text-secondary mb-4">Informe seu nome de usuário e sua senha.</p>
+
+            <form method="post" action="{% url 'entrar' %}" novalidate>
+                {% csrf_token %}
+
+                {% if proximo %}
+                    <input type="hidden" name="next" value="{{ proximo }}">
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for erro in form.non_field_errors %}
+                            {{ erro }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">
+                        {{ form.username.label }}
+                    </label>
+                    {{ form.username }}
+                    {% for erro in form.username.errors %}
+                        <div class="invalid-feedback d-block">{{ erro }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="{{ form.password.id_for_label }}">
+                        {{ form.password.label }}
+                    </label>
+                    {{ form.password }}
+                    {% for erro in form.password.errors %}
+                        <div class="invalid-feedback d-block">{{ erro }}</div>
+                    {% endfor %}
+                </div>
+
+                <button class="btn btn-info w-100" type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

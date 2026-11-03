@@ -1,0 +1,69 @@
+{% extends "core/base.html" %}
+
+{% block title %}Alertas | Sistema de Cisternas{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Alertas</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">
+            Total de alertas registrados: {{ quantidade_alertas }}.
+        </p>
+    </div>
+    <a class="btn btn-info" href="{% url 'alerta_criar' %}">Cadastrar alerta</a>
+</div>
+
+{% if alertas %}
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cisterna</th>
+                    <th>Tipo</th>
+                    <th>Mensagem</th>
+                    <th>Status</th>
+                    <th>Data e hora</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alerta in alertas %}
+                <tr>
+                    <td>{{ alerta.id }}</td>
+                    <td>
+                        <strong>Cisterna {{ alerta.cisterna.id }}</strong><br>
+                        <small class="text-body-secondary">{{ alerta.cisterna.descricao }}</small>
+                    </td>
+                    <td>{% include "alertas/partials/tipo_badge.html" %}</td>
+                    <td class="text-break" style="min-width: 220px;">{{ alerta.mensagem }}</td>
+                    <td><span class="badge text-bg-secondary">{{ alerta.status }}</span></td>
+                    <td class="text-nowrap">{{ alerta.dataHora|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-sm btn-outline-neutro" href="{% url 'alerta_detalhar' alerta.pk %}">Detalhes</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'alerta_editar' alerta.pk %}">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'alerta_excluir' alerta.pk %}">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="card text-center">
+    <div class="card-body py-5">
+        <h2 class="h4">Nenhum alerta cadastrado</h2>
+        <p class="text-body-secondary mx-auto" style="max-width: 560px;">
+            Cadastre um alerta quando for necessário registrar uma
+            ocorrência relacionada a alguma cisterna.
+        </p>
+        <a class="btn btn-info" href="{% url 'alerta_criar' %}">Cadastrar primeiro alerta</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

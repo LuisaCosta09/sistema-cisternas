@@ -1,87 +1,82 @@
-{% extends "cisternas/base.html" %}
+{% extends "core/base.html" %}
 {% load l10n %}
+
 {% block title %}Cisternas | Sistema de Cisternas{% endblock %}
+
 {% block content %}
-<section class="painel">
- <div class="pagina-topo">
- <div>
- <p class="pagina-sobre">Cisternas</p>
- <h1>{{ titulo_pagina }}</h1>
- <p class="pagina-descricao">
- Total de cisternas cadastradas: {{ quantidade_cisternas }}.
- </p>
- </div>
- <a class="botao botao-primario" href="{% url 'cisterna_criar' %}">
- Cadastrar cisterna
- </a>
- </div>
- {% if cisternas %}
- <div class="tabela-container">
- <table class="tabela-dados">
- <thead>
- <tr>
- <th>ID</th>
- <th>Responsável</th>
- <th>Latitude</th>
- <th>Longitude</th>
- <th>Capacidade</th>
- <th>Descrição</th>
- <th>Status</th>
- <th>Mapa</th>
- <th>Ações</th>
- </tr>
- </thead>
- <tbody>
- {% for cisterna in cisternas %}
- <tr>
- <td>{{ cisterna.id }}</td>
- <td>{{ cisterna.usuario.nome }}</td>
- <td>{{ cisterna.latitude }}</td>
- <td>{{ cisterna.longitude }}</td>
- <td>{{ cisterna.capacidade }} L</td>
- <td>{{ cisterna.descricao }}</td>
- <td>
- <span class="status-texto">
- {{ cisterna.status }}
- </span>
- </td>
- <td>
- {% if cisterna.latitude is not None and cisterna.longitude is not None %}
- <a
- class="link-tabela"
- href="https://www.google.com/maps/search/?api=1&amp;query={{ cisterna.latitude|unlocalize }},{{ cisterna.longitude|unlocalize }}"
- target="_blank"
- rel="noopener noreferrer"
- >
- Ver no mapa
- </a>
- {% else %}
- <span>Localização indisponível</span>
- {% endif %}
- </td>
- <td>
- <div class="acoes-tabela">
- <a class="link-tabela" href="{% url 'cisterna_detalhar' cisterna.pk %}">Detalhes</a>
- <a class="link-tabela" href="{% url 'cisterna_editar' cisterna.pk %}">Editar</a>
- <a class="link-perigo" href="{% url 'cisterna_excluir' cisterna.pk %}">Excluir</a>
- </div>
- </td>
- </tr>
- {% endfor %}
- </tbody>
- </table>
- </div>
- {% else %}
- <div class="estado-vazio">
- <h2>Nenhuma cisterna cadastrada</h2>
- <p>
- Cadastre a primeira cisterna para começar a registrar
- monitoramentos, alertas e abastecimentos.
- </p>
- <a class="botao botao-primario" href="{% url 'cisterna_criar' %}">
- Cadastrar primeira cisterna
- </a>
- </div>
- {% endif %}
-</section>
+<div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+        <p class="text-body-secondary text-uppercase small fw-bold mb-1">Cisternas</p>
+        <h1 class="h2 mb-1">{{ titulo_pagina }}</h1>
+        <p class="text-body-secondary mb-0">
+            Total de cisternas cadastradas: {{ quantidade_cisternas }}.
+        </p>
+    </div>
+    <a class="btn btn-info" href="{% url 'cisterna_criar' %}">Cadastrar cisterna</a>
+</div>
+
+{% if cisternas %}
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Responsável</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Capacidade</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Mapa</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cisterna in cisternas %}
+                <tr>
+                    <td>{{ cisterna.id }}</td>
+                    <td>{{ cisterna.usuario.nome }}</td>
+                    <td>{{ cisterna.latitude }}</td>
+                    <td>{{ cisterna.longitude }}</td>
+                    <td>{{ cisterna.capacidade }} L</td>
+                    <td>{{ cisterna.descricao }}</td>
+                    <td>
+                        <span class="badge {% if cisterna.status == 'Ativa' %}text-bg-success{% elif cisterna.status == 'Inativa' %}text-bg-secondary{% elif cisterna.status == 'Em manutenção' %}text-bg-warning{% elif cisterna.status == 'Em instalação' %}text-bg-info{% elif cisterna.status == 'Interditada' %}text-bg-danger{% else %}text-bg-secondary{% endif %}">
+                            {{ cisterna.status }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if cisterna.latitude is not None and cisterna.longitude is not None %}
+                            <a href="https://www.google.com/maps/search/?api=1&amp;query={{ cisterna.latitude|unlocalize }},{{ cisterna.longitude|unlocalize }}"
+                               target="_blank" rel="noopener noreferrer">Ver no mapa</a>
+                        {% else %}
+                            <span class="text-body-secondary">Localização indisponível</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-sm btn-outline-neutro" href="{% url 'cisterna_detalhar' cisterna.pk %}">Detalhes</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'cisterna_editar' cisterna.pk %}">Editar</a>
+                            <a class="btn btn-sm btn-outline-danger" href="{% url 'cisterna_excluir' cisterna.pk %}">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="card text-center">
+    <div class="card-body py-5">
+        <h2 class="h4">Nenhuma cisterna cadastrada</h2>
+        <p class="text-body-secondary mx-auto" style="max-width: 560px;">
+            Cadastre a primeira cisterna para começar a registrar
+            monitoramentos, alertas e abastecimentos.
+        </p>
+        <a class="btn btn-info" href="{% url 'cisterna_criar' %}">Cadastrar primeira cisterna</a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
