@@ -1,0 +1,31 @@
+body {
+  min-height: 100vh;
+  background: #f3f6f8;
+}
+
+.conteudo-principal {
+  width: min(1180px, calc(100% - 32px));
+  margin: 32px auto;
+}
+
+/* Mensagem do botão "Usar minha localização" (o texto é escrito pelo geolocalizacao.js) */
+.mensagem-localizacao {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.mensagem-localizacao[data-tipo="sucesso"] {
+  color: #25633b;
+}
+
+.mensagem-localizacao[data-tipo="erro"] {
+  color: #9b2525;
+}
+
+@media (max-width: 760px) {
+  .conteudo-principal {
+    width: min(100% - 20px, 1180px);
+    margin: 20px auto;
+  }
+}
