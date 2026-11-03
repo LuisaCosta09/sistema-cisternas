@@ -1,0 +1,1 @@
+<span class="badge {% if alerta.tipo == 'Cheia' %}nivel-cheia{% elif alerta.tipo == 'Nível médio alto' %}nivel-medio-alto{% elif alerta.tipo == 'Nível OK' %}nivel-ok{% elif alerta.tipo == 'Nível médio baixo' %}nivel-medio-baixo{% elif alerta.tipo == 'Nível baixo' %}nivel-baixo{% else %}text-bg-secondary{% endif %}">{{ alerta.tipo }}</span>
