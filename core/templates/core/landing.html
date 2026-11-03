@@ -1,0 +1,618 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema de Cisternas</title>
+{% include "core/partials/favicon.html" %}
+<meta name="description" content="Sistema de Cisternas: cadastro de cisternas, monitoramento de nível e consumo, abastecimentos e alertas em um só lugar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'core/landing/templatemo-623-novapay-style.css' %}">
+
+<!--
+================================================================================
+  NovaPay — Modern Financial Platform Landing Page
+  Template: templatemo-623-novapay
+  Designed by: TemplateMo  (https://templatemo.com)
+  Free for personal and commercial use under CC BY 3.0 license.
+  Credit link to TemplateMo is required.
+================================================================================
+-->
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+         <svg viewBox="0 0 16 16"><path d="M8 1.2C8 1.2 3.2 6.2 3.2 9.6a4.8 4.8 0 0 0 9.6 0C12.8 6.2 8 1.2 8 1.2z" fill="white" stroke="none"/></svg>
+    </div>
+    Sistema de Cisternas
+  </a>
+  <div class="nav-links">
+    <a href="#features">Funcionalidades</a>
+    <a href="#dashboard">Painel</a>
+    <a href="#faq">Perguntas</a>
+  </div>
+  <div class="nav-cta">
+    <a href="{% url 'entrar' %}" class="btn-ghost">Entrar</a>
+    <a href="{% url 'entrar' %}" class="btn-primary">Acessar o sistema </a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#features">Funcionalidades</a>
+    <a href="#dashboard">Painel</a>
+    <a href="#faq">Perguntas</a>
+  <div class="m-btns">
+    <a href="{% url 'entrar' %}" class="btn-ghost">Entrar</a>
+    <a href="{% url 'entrar' %}" class="btn-primary">Acessar o sistema</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content silk-reveal-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Monitoramento de cisternas
+    </div>
+    <h1>Cada cisterna<br>monitorada,<br><span>do nível ao consumo</span></h1>
+    <p class="hero-sub">O Sistema de Cisternas reúne o cadastro das cisternas, as leituras de nível e consumo, os abastecimentos e os alertas em um só lugar.</p>
+    <div class="hero-btns">
+      <a href="{% url 'entrar' %}" class="btn-hero">
+        Entrar no sistema
+        <svg viewBox="0 0 16 16"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg>
+      </a>
+      <a href="#dashboard" class="btn-outline">Ver o painel</a>
+    </div>
+    <div class="hero-trust">
+      <p class="hero-trust-text"><strong>Projeto acadêmico</strong> de gestão de cisternas</p>
+    </div>
+  </div>
+  <div class="hero-visual silk-reveal-right">
+    <div class="float-badge fb-left">
+      <div class="float-badge-icon" style="background:rgba(61,204,142,.12)">
+        <svg width="18" height="18" fill="none" stroke="#3DCC8E" stroke-width="2" stroke-linecap="round" viewBox="0 0 18 18"><polyline points="2,12 7,7 11,10 16,4"/></svg>
+      </div>
+      <div class="float-badge-info">
+        <div class="val">72%</div>
+        <div class="lbl">Nível da água</div>
+      </div>
+    </div>
+    <div class="float-badge fb-right">
+      <div class="float-badge-icon" style="background:rgba(74,158,232,.12)">
+        <svg width="18" height="18" fill="none" stroke="#4A9EE8" stroke-width="2" stroke-linecap="round" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7"/><polyline points="9,5 9,9 12,11"/></svg>
+      </div>
+      <div class="float-badge-info">
+        <div class="val">2 alertas</div>
+        <div class="lbl">Em aberto</div>
+      </div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-topbar">
+        <div class="dash-dots">
+          <span style="background:#E85A5A"></span>
+          <span style="background:#F0A030"></span>
+          <span style="background:#3DCC8E"></span>
+        </div>
+        <span class="dash-title-bar">PAINEL DE EXEMPLO</span>
+        <span style="font-size:10px;color:var(--green);font-weight:500">● Exemplo</span>
+      </div>
+      <div class="dash-body">
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <div class="dash-stat-label">Nível atual</div>
+            <div class="dash-stat-val">72%</div>
+            <div class="dash-stat-change" style="color:var(--green)">Estável</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Consumo</div>
+            <div class="dash-stat-val">1.280 L</div>
+            <div class="dash-stat-change" style="color:var(--text3)">No mês</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Abastecido</div>
+            <div class="dash-stat-val">3.000 L</div>
+            <div class="dash-stat-change" style="color:var(--green)">+18% no mês</div>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-head">
+            <span class="chart-head-title">Nível — 7 dias</span>
+            <span class="chart-badge">+4%</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:6px;height:64px">
+            <div style="flex:1;background:rgba(74,158,232,.18);border-radius:3px 3px 0 0;height:55%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.18);border-radius:3px 3px 0 0;height:72%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.18);border-radius:3px 3px 0 0;height:48%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.18);border-radius:3px 3px 0 0;height:88%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.18);border-radius:3px 3px 0 0;height:65%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.25);border-radius:3px 3px 0 0;height:92%;border-top:2px solid var(--sky2)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.35);border-radius:3px 3px 0 0;height:100%;border-top:2px solid var(--sky2)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:5px">
+            <span style="font-size:10px;color:var(--text3)">Seg</span>
+            <span style="font-size:10px;color:var(--text3)">Ter</span>
+            <span style="font-size:10px;color:var(--text3)">Qua</span>
+            <span style="font-size:10px;color:var(--text3)">Qui</span>
+            <span style="font-size:10px;color:var(--text3)">Sex</span>
+            <span style="font-size:10px;color:var(--text3)">Sáb</span>
+            <span style="font-size:10px;color:var(--sky)">Hoje</span>
+          </div>
+        </div>
+        <div class="tx-list">
+          <div class="tx-item">
+            <div class="tx-icon" style="background:#0E2230;color:#4A9EE8">AB</div>
+            <div class="tx-info">
+              <div class="tx-name">Abastecimento</div>
+              <div class="tx-date">Hoje, 09:14</div>
+            </div>
+            <div class="tx-amount" style="color:var(--green)">+1.000 L</div>
+          </div>
+          <div class="tx-item">
+            <div class="tx-icon" style="background:#1A1020;color:#A87EE8">AL</div>
+            <div class="tx-info">
+              <div class="tx-name">Alerta de nível baixo</div>
+              <div class="tx-date">Ontem, 15:40</div>
+            </div>
+            <div class="tx-amount" style="color:var(--red)">Pendente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stat-block">
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="stat-num" data-target="5">0</div>
+    <div class="stat-label">Áreas integradas</div>
+    <div class="stat-trend" style="color:var(--green)">Cadastro, edição e exclusão em todas</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-icon">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <div class="stat-num" data-target="2">0</div>
+    <div class="stat-label">Perfis de acesso</div>
+    <div class="stat-trend" style="color:var(--green)">Administrador e usuário comum</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-icon" style="background:rgba(61,204,142,.1);border-color:rgba(61,204,142,.15)">
+      <svg viewBox="0 0 24 24" style="stroke:var(--green)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
+    </div>
+    <div class="stat-num" data-target="31">0</div>
+    <div class="stat-label">Testes automatizados</div>
+    <div class="stat-trend" style="color:var(--green)">Cobrem login, permissões e cadastros</div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-icon" style="background:rgba(136,136,248,.1);border-color:rgba(136,136,248,.15)">
+      <svg viewBox="0 0 24 24" style="stroke:#8888F8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+    </div>
+    <div class="stat-num" data-target="6">0</div>
+    <div class="stat-label">Apps Django independentes</div>
+    <div class="stat-trend" style="color:#8888F8">Cada área com suas telas e rotas</div>
+  </div>
+</section>
+
+<!-- FEATURES — STICKY STACK -->
+<section class="features-section" id="features">
+  <div class="features-header silk-reveal">
+    <div class="section-tag">Funcionalidades</div>
+    <h2 class="section-title">Tudo o que a gestão das cisternas precisa</h2>
+    <p class="section-sub">Cadastro, leituras, abastecimentos e alertas em um só sistema. Os dados dos painéis ao lado são apenas exemplos ilustrativos.</p>
+  </div>
+  <div class="sticky-layout">
+    <div class="sticky-cards">
+
+      <div class="sticky-card active" data-panel="0">
+        <div class="sticky-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Cadastro de cisternas</h3>
+        <p>Registre cada cisterna com localização (latitude e longitude), capacidade, descrição, status e usuário responsável. Abra a posição no mapa com um clique.</p>
+        <div class="sticky-card-pills">
+          <span class="sc-pill">Localização</span>
+          <span class="sc-pill">Capacidade</span>
+          <span class="sc-pill">Status</span>
+        </div>
+      </div>
+
+      <div class="sticky-card" data-panel="1">
+        <div class="sticky-card-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Monitoramentos</h3>
+        <p>Registre as leituras de nível da água e de consumo de cada cisterna, com data e hora e a situação do momento.</p>
+        <div class="sticky-card-pills">
+          <span class="sc-pill">Nível da água</span>
+          <span class="sc-pill">Consumo</span>
+          <span class="sc-pill">Histórico</span>
+        </div>
+      </div>
+
+      <div class="sticky-card" data-panel="2">
+        <div class="sticky-card-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <h3>Abastecimentos</h3>
+        <p>Guarde cada abastecimento com a quantidade de água, o tipo e observações, sempre ligado à cisterna e ao usuário certos.</p>
+        <div class="sticky-card-pills">
+          <span class="sc-pill">Quantidade</span>
+          <span class="sc-pill">Tipo</span>
+          <span class="sc-pill">Observações</span>
+        </div>
+      </div>
+
+      <div class="sticky-card" data-panel="3">
+        <div class="sticky-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Alertas</h3>
+        <p>Registre ocorrências de cada cisterna com tipo, mensagem e status, e mantenha o histórico organizado.</p>
+        <div class="sticky-card-pills">
+          <span class="sc-pill">Tipo</span>
+          <span class="sc-pill">Status</span>
+          <span class="sc-pill">Histórico</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sticky-panel-wrap">
+      <div class="sticky-panel">
+        <div class="panel-topbar">
+          <div class="panel-dots">
+            <span style="background:#E85A5A"></span>
+            <span style="background:#F0A030"></span>
+            <span style="background:#3DCC8E"></span>
+          </div>
+          <span style="font-size:11px;color:var(--text3);margin-left:8px" id="panelLabel">Cisternas (exemplo)</span>
+        </div>
+        <div class="panel-content">
+
+          <!-- Panel 0: Cisternas -->
+          <div class="panel-view active" id="panel-0">
+            <div class="pm-row">
+              <div class="pm-card">
+                <div class="pm-label">Cisternas</div>
+                <div class="pm-val">3</div>
+                <div class="pm-change" style="color:var(--green)">Cadastradas</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-label">Capacidade total</div>
+                <div class="pm-val">4.500 L</div>
+                <div class="pm-change" style="color:var(--text3)">Soma das três</div>
+              </div>
+            </div>
+            <div class="pm-list">
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0A2030;color:#4A9EE8">C1</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Cisterna principal</div>
+                  <div class="pm-list-sub">Ativa</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">1.200 L</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0A1A28;color:#7EC8F0">C2</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Cisterna do quintal</div>
+                  <div class="pm-list-sub">Em manutenção</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--text2)">800 L</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#101828;color:#8888F8">C3</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Cisterna da horta</div>
+                  <div class="pm-list-sub">Ativa</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">2.500 L</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 1: Monitoramentos -->
+          <div class="panel-view" id="panel-1">
+            <div class="pm-row">
+              <div class="pm-card">
+                <div class="pm-label">Nível atual</div>
+                <div class="pm-val">72%</div>
+                <div class="pm-change" style="color:var(--green)">Última leitura</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-label">Consumo</div>
+                <div class="pm-val">180 L</div>
+                <div class="pm-change" style="color:var(--text3)">Hoje</div>
+              </div>
+            </div>
+            <div class="pm-chart-mini">
+              <div class="pm-label">Nível da água — 8 leituras</div>
+              <div class="pm-sparkline" id="sparkline"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--text2)">Cisterna principal</span>
+                  <span style="font-size:12px;font-weight:600">72%</span>
+                </div>
+                <div class="pm-bar-wrap"><div class="pm-bar" style="width:72%"></div></div>
+              </div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--text2)">Cisterna do quintal</span>
+                  <span style="font-size:12px;font-weight:600">45%</span>
+                </div>
+                <div class="pm-bar-wrap"><div class="pm-bar" style="width:45%;background:var(--sky2)"></div></div>
+              </div>
+              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                  <span style="font-size:12px;color:var(--text2)">Cisterna da horta</span>
+                  <span style="font-size:12px;font-weight:600">88%</span>
+                </div>
+                <div class="pm-bar-wrap"><div class="pm-bar" style="width:88%;background:#8888F8"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: Abastecimentos -->
+          <div class="panel-view" id="panel-2">
+            <div class="pm-row">
+              <div class="pm-card">
+                <div class="pm-label">Registros</div>
+                <div class="pm-val">3</div>
+                <div class="pm-change" style="color:var(--text3)">Últimos lançamentos</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-label">Água recebida</div>
+                <div class="pm-val">3.000 L</div>
+                <div class="pm-change" style="color:var(--green)">Soma dos três</div>
+              </div>
+            </div>
+            <div class="pm-list">
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0A1830;color:#4A9EE8">CP</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Caminhão-pipa</div>
+                  <div class="pm-list-sub">Cisterna principal • Concluído</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">+1.000 L</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0A1428;color:#4A9EE8">CP</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Caminhão-pipa</div>
+                  <div class="pm-list-sub">Cisterna da horta • Concluído</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">+1.500 L</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0E1820;color:#7EC8F0">CH</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Captação de chuva</div>
+                  <div class="pm-list-sub">Cisterna do quintal • Concluído</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">+500 L</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Alertas -->
+          <div class="panel-view" id="panel-3">
+            <div class="pm-row">
+              <div class="pm-card">
+                <div class="pm-label">Em aberto</div>
+                <div class="pm-val">2</div>
+                <div class="pm-change" style="color:var(--red)">Precisam de atenção</div>
+              </div>
+              <div class="pm-card">
+                <div class="pm-label">Resolvidos</div>
+                <div class="pm-val">1</div>
+                <div class="pm-change" style="color:var(--green)">Na lista</div>
+              </div>
+            </div>
+            <div class="pm-list">
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#2A1018;color:#E85A5A">NB</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Nível baixo</div>
+                  <div class="pm-list-sub">Cisterna do quintal</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--red)">Pendente</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#2A2010;color:#F0A030">MN</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Manutenção necessária</div>
+                  <div class="pm-list-sub">Cisterna da horta</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--text2)">Em análise</div>
+              </div>
+              <div class="pm-list-item">
+                <div class="pm-list-icon" style="background:#0A2018;color:#3DCC8E">NC</div>
+                <div class="pm-list-info">
+                  <div class="pm-list-name">Nível crítico</div>
+                  <div class="pm-list-sub">Cisterna principal</div>
+                </div>
+                <div class="pm-list-amt" style="color:var(--green)">Resolvido</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- DASHBOARD PREVIEW -->
+<section class="dashboard-section" id="dashboard">
+  <div class="dashboard-inner">
+    <div style="text-align:center">
+      <div class="section-tag">Exemplo ilustrativo</div>
+      <h2 class="section-title">Visão geral das cisternas</h2>
+      <p class="section-sub" style="max-width:520px;margin:0 auto">Uma ilustração de como níveis, consumo, abastecimentos e alertas podem ser acompanhados. Os valores abaixo são apenas exemplos.</p>
+    </div>
+    <div class="dashboard-preview">
+      <div class="dp-topbar">
+        <div class="dp-title">Visão geral</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="dp-live">Dados de exemplo</div>
+          <div class="dp-chart-period">
+            <button class="dp-period-btn active" onclick="switchPeriod(this,'7d')">7D</button>
+            <button class="dp-period-btn" onclick="switchPeriod(this,'1m')">1M</button>
+            <button class="dp-period-btn" onclick="switchPeriod(this,'3m')">3M</button>
+            <button class="dp-period-btn" onclick="switchPeriod(this,'1y')">1A</button>
+          </div>
+        </div>
+      </div>
+      <div class="dp-body">
+        <div class="dp-chart-area">
+          <div class="dp-chart-head">
+            <div>
+              <div class="dp-chart-val" id="dpChartVal">72%</div>
+              <div class="dp-chart-change" id="dpChartChange">Nível médio dos últimos 7 dias</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:5px;height:160px;padding-top:12px">
+            <div style="flex:1;background:rgba(74,158,232,.15);border-radius:3px 3px 0 0;height:62%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.15);border-radius:3px 3px 0 0;height:70%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.15);border-radius:3px 3px 0 0;height:58%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.15);border-radius:3px 3px 0 0;height:80%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.15);border-radius:3px 3px 0 0;height:72%;border-top:2px solid var(--sky)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.22);border-radius:3px 3px 0 0;height:88%;border-top:2px solid var(--sky2)"></div>
+            <div style="flex:1;background:rgba(74,158,232,.32);border-radius:3px 3px 0 0;height:100%;border-top:2px solid var(--sky2)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px">
+            <span style="font-size:11px;color:var(--text3)">Seg</span>
+            <span style="font-size:11px;color:var(--text3)">Ter</span>
+            <span style="font-size:11px;color:var(--text3)">Qua</span>
+            <span style="font-size:11px;color:var(--text3)">Qui</span>
+            <span style="font-size:11px;color:var(--text3)">Sex</span>
+            <span style="font-size:11px;color:var(--text3)">Sáb</span>
+            <span style="font-size:11px;color:var(--sky)">Hoje</span>
+          </div>
+        </div>
+        <div class="dp-side">
+          <div class="dp-side-card">
+            <div class="dp-side-label">Consumo no mês</div>
+            <div class="dp-side-val">1.280 L</div>
+            <div class="dp-side-change" style="color:var(--text3)">Soma das cisternas</div>
+            <div class="dp-allocations">
+              <div class="dp-alloc-row">
+                <div class="dp-alloc-dot" style="background:var(--sky)"></div>
+                <div class="dp-alloc-name">Principal</div>
+                <div class="dp-alloc-bar-wrap"><div class="dp-alloc-bar" style="width:64%;background:var(--sky)"></div></div>
+                <div class="dp-alloc-pct">64%</div>
+              </div>
+              <div class="dp-alloc-row">
+                <div class="dp-alloc-dot" style="background:#8888F8"></div>
+                <div class="dp-alloc-name">Horta</div>
+                <div class="dp-alloc-bar-wrap"><div class="dp-alloc-bar" style="width:36%;background:#8888F8"></div></div>
+                <div class="dp-alloc-pct">36%</div>
+              </div>
+            </div>
+          </div>
+          <div class="dp-side-card">
+            <div class="dp-side-label">Abastecimentos</div>
+            <div class="dp-side-val">6</div>
+            <div class="dp-side-change" style="color:var(--text3)">Neste mês</div>
+            <div class="dp-allocations" style="margin-top:10px">
+              <div class="dp-alloc-row">
+                <div class="dp-alloc-dot" style="background:var(--green)"></div>
+                <div class="dp-alloc-name">Concluídos</div>
+                <div class="dp-alloc-pct" style="color:var(--green)">5</div>
+              </div>
+              <div class="dp-alloc-row">
+                <div class="dp-alloc-dot" style="background:var(--red)"></div>
+                <div class="dp-alloc-name">Pendentes</div>
+                <div class="dp-alloc-pct" style="color:var(--red)">1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security-section" id="security">
+  <div class="security-inner">
+    <div>
+      <div class="section-tag">Acesso protegido</div>
+      <h2 class="section-title">Cada pessoa vê só o que é dela</h2>
+      <p class="section-sub" style="margin-bottom:24px">O sistema exige login em todas as telas e separa o que cada perfil pode fazer. O administrador gerencia os usuários, e o usuário comum acessa apenas os próprios dados.</p>
+      <a href="{% url 'entrar' %}" class="btn-outline" style="display:inline-block">Entrar no sistema</a>
+    </div>
+    <div class="security-badges">
+      <div class="sec-badge">
+        <div class="sec-badge-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="sec-badge-name">Login obrigatório</div>
+        <div class="sec-badge-desc">Quem não está autenticado é enviado para a tela de entrada</div>
+        <div class="sec-badge-status">Ativo</div>
+      </div>
+      <div class="sec-badge">
+        <div class="sec-badge-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="sec-badge-name">Senhas protegidas</div>
+        <div class="sec-badge-desc">As senhas são guardadas com criptografia, nunca em texto puro</div>
+        <div class="sec-badge-status">Ativo</div>
+      </div>
+      <div class="sec-badge">
+        <div class="sec-badge-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="sec-badge-name">Perfis de acesso</div>
+        <div class="sec-badge-desc">Só o administrador cadastra usuários e vê a lista completa</div>
+        <div class="sec-badge-status">Ativo</div>
+      </div>
+      <div class="sec-badge">
+        <div class="sec-badge-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="sec-badge-name">Formulários protegidos</div>
+        <div class="sec-badge-desc">Todo envio e a saída do sistema usam proteção contra requisições forjadas</div>
+        <div class="sec-badge-status">Ativo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div style="text-align:left">
+        <div class="section-tag">Dúvidas?</div>
+        <h2 class="section-title">Perguntas frequentes</h2>
+      </div>
+      <button id="faqToggleAll" onclick="toggleAllFaq()" style="background:transparent;border:1px solid var(--border2);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .2s;white-space:nowrap;margin-bottom:6px">
+        <svg id="faqToggleIcon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span id="faqToggleLabel">Expandir tudo</span>
+      </button>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="padding:24px max(48px, calc((100vw - var(--max-w)) / 2));border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+  <div style="font-size:13px;color:var(--text3)">© 2026 Sistema de Cisternas. Template NovaPay por <a href="https://templatemo.com" style="color:var(--sky);text-decoration:none;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">TemplateMo</a>.</div>
+  <div style="display:flex;align-items:center;gap:20px">
+    <a href="#home" class="footer-link">Início</a>
+    <a href="#faq" class="footer-link">Perguntas</a>
+    <a href="{% url 'entrar' %}" class="footer-link">Entrar</a>
+  </div>
+</footer>
+
+<script src="{% static 'core/landing/templatemo-623-novapay-script.js' %}"></script>
+</body>
+</html>
