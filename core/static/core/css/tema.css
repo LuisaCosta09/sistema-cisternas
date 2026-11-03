@@ -1,0 +1,243 @@
+:root {
+  --bs-body-font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --nv-slate-900: #0f172a;
+  --nv-sky-400: #38bdf8;
+  --nv-sky-500: #0ea5e9;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand {
+  font-family: 'Outfit', var(--bs-body-font-family);
+}
+
+.nv-navbar {
+  background: var(--nv-slate-900);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.nv-navbar .container {
+  max-width: 1180px;
+}
+
+.nv-navbar .navbar-brand {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.nv-navbar .nav-link {
+  color: #cbd5e1;
+}
+
+.nv-navbar .nav-link:hover,
+.nv-navbar .nav-link.active {
+  color: var(--nv-sky-400);
+}
+
+.btn-info {
+  --bs-btn-color: #0f172a;
+  --bs-btn-bg: #38bdf8;
+  --bs-btn-border-color: #38bdf8;
+  --bs-btn-hover-color: #0f172a;
+  --bs-btn-hover-bg: #0ea5e9;
+  --bs-btn-hover-border-color: #0ea5e9;
+  --bs-btn-active-color: #0f172a;
+  --bs-btn-active-bg: #0ea5e9;
+  --bs-btn-active-border-color: #0ea5e9;
+}
+
+.btn-outline-info {
+  --bs-btn-color: #38bdf8;
+  --bs-btn-border-color: #38bdf8;
+  --bs-btn-hover-color: #0f172a;
+  --bs-btn-hover-bg: #38bdf8;
+  --bs-btn-hover-border-color: #38bdf8;
+  --bs-btn-active-color: #0f172a;
+  --bs-btn-active-bg: #38bdf8;
+  --bs-btn-active-border-color: #38bdf8;
+}
+.contador-campo {
+  color: #6c757d;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.contador-campo[data-proximo-limite="true"] {
+  color: #b45309;
+  font-weight: 700;
+}
+
+/* Botão neutro: contorno que se adapta ao tema claro e ao escuro */
+.btn-outline-neutro {
+  --bs-btn-color: var(--bs-emphasis-color);
+  --bs-btn-border-color: var(--bs-emphasis-color);
+  --bs-btn-hover-color: var(--bs-body-bg);
+  --bs-btn-hover-bg: var(--bs-emphasis-color);
+  --bs-btn-hover-border-color: var(--bs-emphasis-color);
+  --bs-btn-active-color: var(--bs-body-bg);
+  --bs-btn-active-bg: var(--bs-emphasis-color);
+  --bs-btn-active-border-color: var(--bs-emphasis-color);
+}
+
+/* Gotinha da marca */
+.nv-navbar .icone-gota {
+  color: #4a9ee8;
+}
+
+/* Interruptor de tema na navbar */
+.nv-navbar .form-check-input {
+  cursor: pointer;
+}
+
+.nv-navbar .form-check-input:checked {
+  background-color: #4a9ee8;
+  border-color: #4a9ee8;
+}
+
+.nv-navbar .form-check-label {
+  cursor: pointer;
+}
+
+/* Cores dos tipos de alerta (do nível mais cheio ao mais baixo) */
+.nivel-cheia,
+.nivel-medio-alto,
+.nivel-ok,
+.nivel-medio-baixo,
+.nivel-baixo {
+  font-weight: 600;
+}
+
+.nivel-cheia {
+  background-color: #198754;
+  color: #ffffff;
+}
+
+.nivel-medio-alto {
+  background-color: #5fcf8f;
+  color: #0b3b22;
+}
+
+.nivel-ok {
+  background-color: #b5e06b;
+  color: #2b4208;
+}
+
+.nivel-medio-baixo {
+  background-color: #ffc107;
+  color: #3d2f00;
+}
+
+.nivel-baixo {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+/* ===== Modo escuro: mesma paleta da página inicial (NovaPay) ===== */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #0f1319;
+  --bs-body-bg-rgb: 15, 19, 25;
+  --bs-body-color: #e4eef8;
+  --bs-body-color-rgb: 228, 238, 248;
+  --bs-emphasis-color: #e4eef8;
+  --bs-secondary-color: #8aaec8;
+  --bs-secondary-bg: #141920;
+  --bs-tertiary-bg: #1a2130;
+  --bs-border-color: #1e3050;
+  --bs-link-color: #7ec8f0;
+  --bs-link-color-rgb: 126, 200, 240;
+  --bs-link-hover-color: #4a9ee8;
+  --bs-link-hover-color-rgb: 74, 158, 232;
+}
+
+[data-bs-theme="dark"] body {
+  background: var(--bs-body-bg);
+}
+
+html[data-bs-theme="dark"] .nv-navbar {
+  background: #141920;
+  border-bottom-color: #1e3050;
+}
+
+[data-bs-theme="dark"] .card {
+  --bs-card-bg: #141920;
+  --bs-card-border-color: #1e3050;
+}
+
+[data-bs-theme="dark"] .table {
+  --bs-table-bg: transparent;
+  --bs-table-color: #e4eef8;
+  --bs-table-border-color: #1e3050;
+  --bs-table-hover-bg: rgba(74, 158, 232, 0.08);
+  --bs-table-hover-color: #e4eef8;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+  background-color: #1a2130;
+  border-color: #2a4060;
+  color: #e4eef8;
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+  color: #506070;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background-color: #1a2130;
+  border-color: #4a9ee8;
+  box-shadow: 0 0 0 0.2rem rgba(74, 158, 232, 0.25);
+}
+
+[data-bs-theme="dark"] .form-control:disabled,
+[data-bs-theme="dark"] .form-select:disabled {
+  background-color: #141920;
+  color: #8aaec8;
+  opacity: 1;
+}
+
+[data-bs-theme="dark"] .btn-info {
+  --bs-btn-color: #0f1319;
+  --bs-btn-bg: #4a9ee8;
+  --bs-btn-border-color: #4a9ee8;
+  --bs-btn-hover-color: #0f1319;
+  --bs-btn-hover-bg: #7ec8f0;
+  --bs-btn-hover-border-color: #7ec8f0;
+  --bs-btn-active-color: #0f1319;
+  --bs-btn-active-bg: #7ec8f0;
+  --bs-btn-active-border-color: #7ec8f0;
+}
+
+[data-bs-theme="dark"] .btn-outline-info {
+  --bs-btn-color: #7ec8f0;
+  --bs-btn-border-color: #4a9ee8;
+  --bs-btn-hover-color: #0f1319;
+  --bs-btn-hover-bg: #4a9ee8;
+  --bs-btn-hover-border-color: #4a9ee8;
+  --bs-btn-active-color: #0f1319;
+  --bs-btn-active-bg: #4a9ee8;
+  --bs-btn-active-border-color: #4a9ee8;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+  --bs-btn-color: #8aaec8;
+  --bs-btn-border-color: #2a4060;
+  --bs-btn-hover-color: #e4eef8;
+  --bs-btn-hover-bg: #1a2130;
+  --bs-btn-hover-border-color: #4a9ee8;
+  --bs-btn-active-color: #e4eef8;
+  --bs-btn-active-bg: #1a2130;
+  --bs-btn-active-border-color: #4a9ee8;
+}
+
+/* Mensagem do botão "Usar minha localização" legível no escuro */
+[data-bs-theme="dark"] .mensagem-localizacao {
+  color: #8aaec8;
+}
+
+[data-bs-theme="dark"] .mensagem-localizacao[data-tipo="sucesso"] {
+  color: #3dcc8e;
+}
+
+[data-bs-theme="dark"] .mensagem-localizacao[data-tipo="erro"] {
+  color: #e85a5a;
+}
