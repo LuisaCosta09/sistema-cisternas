@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.permissoes import filtrar_por_dono
@@ -14,6 +14,7 @@ def _monitoramentos_visiveis(request):
 
 
 @login_required
+@permission_required('monitoramentos.view_monitoramento', raise_exception=True)
 def monitoramento_listar(request):
     monitoramentos = _monitoramentos_visiveis(request)
 
@@ -27,6 +28,7 @@ def monitoramento_listar(request):
 
 
 @login_required
+@permission_required('monitoramentos.add_monitoramento', raise_exception=True)
 def monitoramento_criar(request):
     if request.method == "POST":
         form = MonitoramentoForm(request.POST, usuario_logado=request.user)
@@ -53,6 +55,7 @@ def monitoramento_criar(request):
 
 
 @login_required
+@permission_required('monitoramentos.view_monitoramento', raise_exception=True)
 def monitoramento_detalhar(request, pk):
     monitoramento = get_object_or_404(_monitoramentos_visiveis(request), pk=pk)
 
@@ -65,6 +68,7 @@ def monitoramento_detalhar(request, pk):
 
 
 @login_required
+@permission_required('monitoramentos.change_monitoramento', raise_exception=True)
 def monitoramento_editar(request, pk):
     monitoramento = get_object_or_404(_monitoramentos_visiveis(request), pk=pk)
 
@@ -102,6 +106,7 @@ def monitoramento_editar(request, pk):
 
 
 @login_required
+@permission_required('monitoramentos.delete_monitoramento', raise_exception=True)
 def monitoramento_excluir(request, pk):
     monitoramento = get_object_or_404(_monitoramentos_visiveis(request), pk=pk)
 

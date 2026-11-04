@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.permissoes import filtrar_por_dono
@@ -14,6 +14,7 @@ def _cisternas_visiveis(request):
 
 
 @login_required
+@permission_required('cisternas.view_cisterna', raise_exception=True)
 def cisterna_listar(request):
     cisternas = _cisternas_visiveis(request)
 
@@ -27,6 +28,7 @@ def cisterna_listar(request):
 
 
 @login_required
+@permission_required('cisternas.add_cisterna', raise_exception=True)
 def cisterna_criar(request):
     if request.method == "POST":
         form = CisternaForm(request.POST, usuario_logado=request.user)
@@ -53,6 +55,7 @@ def cisterna_criar(request):
 
 
 @login_required
+@permission_required('cisternas.view_cisterna', raise_exception=True)
 def cisterna_detalhar(request, pk):
     cisterna = get_object_or_404(_cisternas_visiveis(request), pk=pk)
 
@@ -65,6 +68,7 @@ def cisterna_detalhar(request, pk):
 
 
 @login_required
+@permission_required('cisternas.change_cisterna', raise_exception=True)
 def cisterna_editar(request, pk):
     cisterna = get_object_or_404(_cisternas_visiveis(request), pk=pk)
 
@@ -99,6 +103,7 @@ def cisterna_editar(request, pk):
 
 
 @login_required
+@permission_required('cisternas.delete_cisterna', raise_exception=True)
 def cisterna_excluir(request, pk):
     cisterna = get_object_or_404(_cisternas_visiveis(request), pk=pk)
 
