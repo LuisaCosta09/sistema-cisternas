@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.permissoes import filtrar_por_dono
@@ -14,6 +14,7 @@ def _abastecimentos_visiveis(request):
 
 
 @login_required
+@permission_required('abastecimentos.view_abastecimento', raise_exception=True)
 def abastecimento_listar(request):
     abastecimentos = _abastecimentos_visiveis(request)
 
@@ -27,6 +28,7 @@ def abastecimento_listar(request):
 
 
 @login_required
+@permission_required('abastecimentos.add_abastecimento', raise_exception=True)
 def abastecimento_criar(request):
     if request.method == "POST":
         form = AbastecimentoForm(request.POST, usuario_logado=request.user)
@@ -53,6 +55,7 @@ def abastecimento_criar(request):
 
 
 @login_required
+@permission_required('abastecimentos.view_abastecimento', raise_exception=True)
 def abastecimento_detalhar(request, pk):
     abastecimento = get_object_or_404(_abastecimentos_visiveis(request), pk=pk)
 
@@ -65,6 +68,7 @@ def abastecimento_detalhar(request, pk):
 
 
 @login_required
+@permission_required('abastecimentos.change_abastecimento', raise_exception=True)
 def abastecimento_editar(request, pk):
     abastecimento = get_object_or_404(_abastecimentos_visiveis(request), pk=pk)
 
@@ -102,6 +106,7 @@ def abastecimento_editar(request, pk):
 
 
 @login_required
+@permission_required('abastecimentos.delete_abastecimento', raise_exception=True)
 def abastecimento_excluir(request, pk):
     abastecimento = get_object_or_404(_abastecimentos_visiveis(request), pk=pk)
 

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.permissoes import filtrar_por_dono
@@ -14,6 +14,7 @@ def _alertas_visiveis(request):
 
 
 @login_required
+@permission_required('alertas.view_alerta', raise_exception=True)
 def alerta_listar(request):
     alertas = _alertas_visiveis(request)
 
@@ -27,6 +28,7 @@ def alerta_listar(request):
 
 
 @login_required
+@permission_required('alertas.add_alerta', raise_exception=True)
 def alerta_criar(request):
     if request.method == "POST":
         form = AlertaForm(request.POST, usuario_logado=request.user)
@@ -53,6 +55,7 @@ def alerta_criar(request):
 
 
 @login_required
+@permission_required('alertas.change_alerta', raise_exception=True)
 def alerta_detalhar(request, pk):
     alerta = get_object_or_404(_alertas_visiveis(request), pk=pk)
 
@@ -65,6 +68,7 @@ def alerta_detalhar(request, pk):
 
 
 @login_required
+@permission_required('alertas.delete_alerta', raise_exception=True)
 def alerta_editar(request, pk):
     alerta = get_object_or_404(_alertas_visiveis(request), pk=pk)
 

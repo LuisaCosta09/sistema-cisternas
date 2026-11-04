@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -80,6 +80,7 @@ def _usuarios_visiveis_para(request):
 
 
 @login_required
+@permission_required('usuarios.view_usuario', raise_exception=True)
 def usuario_listar(request):
     if not request.user.is_staff:
         return redirect("usuario_detalhar", pk=request.user.pk)
@@ -131,6 +132,7 @@ def usuario_criar(request):
 
 
 @login_required
+@permission_required('usuarios.view_usuario', raise_exception=True)
 def usuario_detalhar(request, pk):
     usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
 
@@ -148,6 +150,7 @@ def usuario_detalhar(request, pk):
 
 
 @login_required
+@permission_required('usuarios.change_usuario', raise_exception=True)
 def usuario_editar(request, pk):
     usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
 
@@ -188,6 +191,7 @@ def usuario_editar(request, pk):
 
 
 @login_required
+@permission_required('usuarios.delete_usuario', raise_exception=True)
 def usuario_excluir(request, pk):
     usuario = get_object_or_404(_usuarios_visiveis_para(request), pk=pk)
     excluindo_propria_conta = usuario.pk == request.user.pk
